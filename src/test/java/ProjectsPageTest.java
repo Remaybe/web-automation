@@ -1,4 +1,3 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -30,9 +29,14 @@ public class ProjectsPageTest {
                 "106 BOM - Trade Corrections CO2");
     }
 
-//    @AfterTest
-//    public void tearDown(){
-//        driver.quit();
-//    }
+    @Test
+    public void clrButtonStatusWithoutValues(){
+        Assert.assertEquals(projectsPage.chckButtonStatus(), false);
+    }
+
+    @AfterTest
+    public void tearDown(){
+        driver.quit();
+    }
 
 }

@@ -8,6 +8,11 @@ public class ProjectsPage {
     }
 
     private By projectHeader = By.xpath("//h6[contains(@class, 'colorTextPrimary')]");
+    private By clrButton = By.xpath("//div[contains(@class, '3mHQO')]/button");
+
+    public boolean chckButtonStatus(){
+        return driver.findElement(clrButton).isEnabled();
+    }
 
     public String getProjectHeader() {
         return driver.findElement(projectHeader).getText();
@@ -32,7 +37,6 @@ public class ProjectsPage {
         driver.findElement(getElementFromList(nameOfElement)).click();
         return this;
     }
-
 
     private By getElementFromList(String nameOfElement){
         return By.xpath("//li[contains(text(), '" + nameOfElement + "')]//input");
