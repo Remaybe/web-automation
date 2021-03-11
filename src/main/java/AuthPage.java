@@ -27,11 +27,10 @@ public class AuthPage {
         return this;
     }
 
-    public ProjectsPage auth(String login, String pass){
+    public void auth(String login, String pass){
         this.clickSignIn()
                 .inputLogin(login)
                 .inputPass(pass)
                 .driver.findElement(signNowButton).click();
-        return new ProjectsPage(driver);
     }
 }

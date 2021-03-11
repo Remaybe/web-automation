@@ -1,9 +1,9 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
 
 public class ProjectsPageTest {
 
@@ -13,21 +13,26 @@ public class ProjectsPageTest {
     @BeforeTest
     public void setUp(){
         driver = ChromeBrowser.createBrowser();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("https://csma-staging.griddynamics.net/projects/364");
+        ChromeBrowser.setProp(driver);
+        driver.get("https://csma-staging.griddynamics.net/projects");
         AuthPage authPage = new AuthPage(driver);
-        projectsPage = authPage.auth("emaznev", "@85411321eGo885441113221");
+        authPage.auth("emaznev", "@85411321eGo885441113221");
+        projectsPage = new ProjectsPage(driver);
     }
 
     @Test
-    public void firstTest(){
-
+    public void searchUsingCmbbxs(){
+        projectsPage.filterByCmbbxValue(Comboboxes.ACCOUNTS, "Raymond James")
+                .filterByCmbbxValue(Comboboxes.PROJECTS, "106 BOM - Trade Corrections CO2")
+                .filterByCmbbxValue(Comboboxes.AREAS, "Fraud Protection")
+                .filterByCmbbxValue(Comboboxes.TECHNOLOGIES, "Azure");
+        Assert.assertEquals(projectsPage.getProjectHeader(),
+                "106 BOM - Trade Corrections CO2");
     }
 
-    @AfterTest
-    public void tearDown(){
-        driver.quit();
-    }
+//    @AfterTest
+//    public void tearDown(){
+//        driver.quit();
+//    }
 
 }

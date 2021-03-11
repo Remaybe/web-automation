@@ -1,5 +1,4 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class ProjectsPage {
@@ -8,18 +7,34 @@ public class ProjectsPage {
         this.driver = driver;
     }
 
-//    private By comboboxesArea = By.xpath("//div[contains(@class, '3mHQO')]/../preceding-sibling::*");
-//    private By comboboxesHeadings = By.xpath("//div[contains(@class, '3mHQO')]/../preceding-sibling::*//label");
-//    private By checkboxesList = By.xpath("//div[contains(@class, '3mHQO')]/..//span[contains(@class, 'jss5')]//input");
-//    private By clearButton = By.xpath("//div[contains(@class, '3mHQO')]/button");
-//    private By allAccountsButton = By.xpath("//input[@id='mui-588']/..//button[2]");
-//    private By allAccountsField = By.xpath("//input[@id='mui-588']");
-//    private By allProjectsButton = By.xpath("//input[@id='mui-87883']/..//button[2]");
-//    private By allAreasButton = By.xpath("//input[@id='mui-35976']/..//button[2]");
-//    private By allTechnologiesButton = By.xpath("//input[@id='mui-27227']/..//button[2]");
+    private By projectHeader = By.xpath("//h6[contains(@class, 'colorTextPrimary')]");
 
-    private By newStudyButton = By.xpath("//button[contains(@class, 'MuiButton-root')]");
+    public String getProjectHeader() {
+        return driver.findElement(projectHeader).getText();
+    }
+
+    public ProjectsPage clickCmbbxButton(Comboboxes cmbbx){
+        driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//button[2]")).click();
+        return this;
+    }
+
+    public ProjectsPage inputCmbbxValue(Comboboxes cmbbx, String value){
+        driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//input")).sendKeys(value);
+        return this;
+    }
+
+    public ProjectsPage filterByCmbbxValue(Comboboxes cmbbx, String value) {
+        this.inputCmbbxValue(cmbbx, value).chooseElement(value).clickCmbbxButton(cmbbx);
+        return this;
+    }
+
+    public ProjectsPage chooseElement(String nameOfElement) {
+        driver.findElement(getElementFromList(nameOfElement)).click();
+        return this;
+    }
 
 
-
+    private By getElementFromList(String nameOfElement){
+        return By.xpath("//li[contains(text(), '" + nameOfElement + "')]//input");
+    }
 }
