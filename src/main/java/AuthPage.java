@@ -1,29 +1,39 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class AuthPage {
-    WebDriver driver;
+public class AuthPage extends BasePage {
+
+    @FindBy(xpath = "//div[contains(@class, 'auth-toggle')]")
+    private WebElement signInLink;
+    @FindBy(xpath = "//input[@id='login']")
+    private WebElement loginInput;
+    @FindBy(xpath = "//input[@id='password']")
+    private WebElement passInput;
+    @FindBy(xpath = "//button[contains(@class, 'ingrid-button')]")
+    private WebElement signNowButton;
+
     public AuthPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    private By signInLink = By.xpath("//div[contains(@class, 'auth-toggle')]");
-    private By loginInput = By.xpath("//input[@id='login']");
-    private By passInput = By.xpath("//input[@id='password']");
-    private By signNowButton = By.xpath("//button[contains(@class, 'ingrid-button')]");
-
     public AuthPage clickSignIn(){
-        this.driver.findElement(signInLink).click();
+        signInLink.click();
         return this;
     }
 
     public AuthPage inputLogin(String login){
-        this.driver.findElement(loginInput).sendKeys(login);
+        loginInput.sendKeys(login);
         return this;
     }
 
     public AuthPage inputPass(String pass){
-        this.driver.findElement(passInput).sendKeys(pass);
+        passInput.sendKeys(pass);
+        return this;
+    }
+
+    public AuthPage clickSignNowButton(){
+        signNowButton.click();
         return this;
     }
 
@@ -31,6 +41,6 @@ public class AuthPage {
         this.clickSignIn()
                 .inputLogin(login)
                 .inputPass(pass)
-                .driver.findElement(signNowButton).click();
+                .clickSignNowButton();
     }
 }

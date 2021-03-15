@@ -1,21 +1,25 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class ProjectsPage {
-    WebDriver driver;
+public class ProjectsPage extends BasePage {
+
+    @FindBy(xpath = "//h6[contains(@class, 'colorTextPrimary')]")
+    private WebElement projectHeader;
+    @FindBy(xpath = "//div[contains(@class, '3mHQO')]/button")
+    private WebElement clrButton;
+
     public ProjectsPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    private By projectHeader = By.xpath("//h6[contains(@class, 'colorTextPrimary')]");
-    private By clrButton = By.xpath("//div[contains(@class, '3mHQO')]/button");
-
     public boolean chckButtonStatus(){
-        return driver.findElement(clrButton).isEnabled();
+        return clrButton.isEnabled();
     }
 
     public String getProjectHeader() {
-        return driver.findElement(projectHeader).getText();
+        return projectHeader.getText();
     }
 
     public ProjectsPage clickCmbbxButton(Comboboxes cmbbx){
