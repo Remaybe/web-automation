@@ -9,6 +9,8 @@ public class ProjectsPage extends BasePage {
     private WebElement projectHeader;
     @FindBy(xpath = "//div[contains(@class, '3mHQO')]/button")
     private WebElement clrButton;
+    @FindBy(xpath = "//tbody//a[contains(@class, 'underline')]/h6")
+    private WebElement searchableProjectFromList;
 
     public ProjectsPage(WebDriver driver) {
         super(driver);
@@ -44,5 +46,10 @@ public class ProjectsPage extends BasePage {
 
     private By getElementFromList(String nameOfElement){
         return By.xpath("//li[contains(text(), '" + nameOfElement + "')]//input");
+    }
+
+    public CaseStudiesPage openProject(){
+        searchableProjectFromList.click();
+        return new CaseStudiesPage(driver);
     }
 }
