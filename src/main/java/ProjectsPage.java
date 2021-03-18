@@ -7,8 +7,10 @@ public class ProjectsPage extends BasePage {
 
     @FindBy(xpath = "//h6[contains(@class, 'colorTextPrimary')]")
     private WebElement projectHeader;
+
     @FindBy(xpath = "//div[contains(@class, '3mHQO')]/button")
     private WebElement clrButton;
+
     @FindBy(xpath = "//tbody//a[contains(@class, 'underline')]/h6")
     private WebElement searchableProjectFromList;
 

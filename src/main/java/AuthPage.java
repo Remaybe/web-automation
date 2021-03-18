@@ -6,10 +6,13 @@ public class AuthPage extends BasePage {
 
     @FindBy(xpath = "//div[contains(@class, 'auth-toggle')]")
     private WebElement signInLink;
+
     @FindBy(xpath = "//input[@id='login']")
     private WebElement loginInput;
+
     @FindBy(xpath = "//input[@id='password']")
     private WebElement passInput;
+
     @FindBy(xpath = "//button[contains(@class, 'ingrid-button')]")
     private WebElement signNowButton;
 

@@ -19,30 +19,27 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.19.0</version>
-            <scope>test</scope>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.4.0</version>
-            <scope>test</scope>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-maven</artifactId>
-            <version>2.8</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>2.13.8</version>
-            <scope>test</scope>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 
@@ -52,7 +49,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.20</version>
+                    <version>LATEST</version>
                     <configuration>
                         <testFailureIgnore>false</testFailureIgnore>
                         <argLine>
@@ -69,7 +66,7 @@
                         <dependency>
                             <groupId>org.aspectj</groupId>
                             <artifactId>aspectjweaver</artifactId>
-                            <version>1.9.1</version>
+                            <version>LATEST</version>
                         </dependency>
                     </dependencies>
                 </plugin>
