@@ -1,12 +1,16 @@
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+@Feature("Authorization on site")
 public class BaseTest {
     protected WebDriver driver;
     protected ProjectsPage projectsPage;
 
     @BeforeTest
+    @Story("Logins on site with corporate mail")
     public void setUp(){
         driver = ChromeBrowser.createBrowser();
         ChromeBrowser.setProp(driver);
@@ -17,6 +21,7 @@ public class BaseTest {
     }
 
     @AfterTest
+    @Story("Closes the browser")
     public void tearDown(){
         driver.quit();
     }

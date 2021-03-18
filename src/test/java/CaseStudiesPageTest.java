@@ -1,10 +1,12 @@
+import io.qameta.allure.Feature;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+@Feature("Creating of case study")
 public class CaseStudiesPageTest extends BaseTest {
     private CaseStudiesPage caseStudies;
 
-    @Test
+    @Test(description = "Creates valid case study with image uploading")
     @Ignore
     public void creatingTestCaseStudy(){
         String img = System.getProperty("user.dir") + "/testscreen.png";
@@ -22,7 +24,7 @@ public class CaseStudiesPageTest extends BaseTest {
 //                .saveStudy();
     }
 
-    @Test
+    @Test(description = "Creates case study with no input values")
     public void createStudyWithoutInput(){
         caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
         caseStudies
@@ -30,7 +32,7 @@ public class CaseStudiesPageTest extends BaseTest {
                 .saveStudy();
     }
 
-    @Test
+    @Test(description = "Creates case study only by filling 'name' field")
     public void createStudyOnlyWithName(){
         caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
         caseStudies
@@ -39,7 +41,7 @@ public class CaseStudiesPageTest extends BaseTest {
                 .saveStudy();
     }
 
-    @Test
+    @Test(description = "Opens creator of case study form immediately after saving the previous one")
     public void createStudyImmediatelyAfterPrevious(){
         caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
         caseStudies
