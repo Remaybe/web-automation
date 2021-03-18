@@ -32,7 +32,7 @@ public class CaseStudiesPageTest extends BaseTest {
                 .saveStudy();
     }
 
-    @Test(description = "Creates case study only by filling 'name' field")
+    @Test(description = "Creates case study only by filling 'name' field") 
     public void createStudyOnlyWithName(){
         caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
         caseStudies
