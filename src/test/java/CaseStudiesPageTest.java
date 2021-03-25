@@ -10,7 +10,7 @@ public class CaseStudiesPageTest extends BaseTest {
     @Ignore
     public void creatingTestCaseStudy(){
         String img = System.getProperty("user.dir") + "/testscreen.png";
-        caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
+        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
                 .setStudiesName("Name")
@@ -25,30 +25,36 @@ public class CaseStudiesPageTest extends BaseTest {
     }
 
     @Test(description = "Creates case study with no input values")
+    @Ignore
     public void createStudyWithoutInput(){
-        caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
+        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
-                .saveStudy();
+                .saveStudy()
+                .verifySaveButtonStatus(false);
     }
 
-    @Test(description = "Creates case study only by filling 'name' field") 
+    @Test(description = "Creates case study only by filling 'name' field")
+    @Ignore
     public void createStudyOnlyWithName(){
-        caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
-        caseStudies
-                .openStudyCreator()
-                .setStudiesName("Some name")
-                .saveStudy();
-    }
-
-    @Test(description = "Opens creator of case study form immediately after saving the previous one")
-    public void createStudyImmediatelyAfterPrevious(){
-        caseStudies = ProjectType.AEO_MOBILE.getStudiesPage(projectsPage);
+        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
                 .setStudiesName("Some name")
                 .saveStudy()
-                .openStudyCreator();
+                .verifySaveButtonStatus(true);
+    }
+
+    @Test(description = "Opens creator of case study form immediately after saving the previous one")
+    @Ignore
+    public void createStudyImmediatelyAfterPrevious(){
+        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
+        caseStudies
+                .openStudyCreator()
+                .setStudiesName("Some name")
+                .saveStudy()
+                .openStudyCreator()
+                .verifyOpenedStudyCreator(true);
     }
 
 }

@@ -3,6 +3,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 public class CaseStudiesPage extends BasePage {
     private JavascriptExecutor js;
@@ -112,7 +113,7 @@ public class CaseStudiesPage extends BasePage {
     @Step("Uploads an image into the field")
     public CaseStudiesPage uploadImg(String file) {
         js = (JavascriptExecutor)driver;
-        js.executeScript("document.querySelector('input[type=file]').setAttribute('ql-image[type=file]', 'display: block')");
+        js.executeScript("document.querySelector('input[type=file]').setAttribute('*', 'display: block')");
         inputImg.sendKeys(file);
         return this;
     }
@@ -167,4 +168,15 @@ public class CaseStudiesPage extends BasePage {
         saveStudyButton.click();
         return this;
     }
+
+    @Step("Verify 'save' button status")
+    public void verifySaveButtonStatus(boolean expectedStatus){
+        Assert.assertEquals(saveStudyButton.isEnabled(), expectedStatus);
+    }
+
+    @Step("Verify if case study's creator form opened")
+    public void verifyOpenedStudyCreator(boolean expectedStatus){
+        Assert.assertEquals(summaryInputFld.isDisplayed(), expectedStatus);
+    }
+
 }

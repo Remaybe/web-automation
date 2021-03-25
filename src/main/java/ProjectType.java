@@ -1,13 +1,16 @@
 import io.qameta.allure.Step;
 
 public enum ProjectType {
-    AEO_MOBILE {
-        @Step("Opens case study's page of 'AEO Mobile' project")
+    SUNFLOWER {
+        @Step("Opens case study's page of 'Sunflower' project")
         public CaseStudiesPage getStudiesPage(ProjectsPage projectsPage) {
             projectsPage
-                    .filterByCmbbxValue(Comboboxes.ACCOUNTS, "AEO")
-                    .filterByCmbbxValue(Comboboxes.TECHNOLOGIES, "Typescript")
-                    .openProject();
+                    .filterByCmbbxValue(Comboboxes.AREAS, "Fraud Detection");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return projectsPage.openProject();
         }
     };
