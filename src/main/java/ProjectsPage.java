@@ -1,9 +1,16 @@
+import io.qameta.allure.Allure;
+import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ProjectsPage extends BasePage {
 
@@ -25,13 +32,33 @@ public class ProjectsPage extends BasePage {
     @FindBy(xpath = "//span[text()='Managed by me']/..//input")
     private WebElement managedByMeCheckbox;
 
+    @FindBy(xpath = "//span[text()='Status']")
+    private WebElement statusHeaderOfTable;
+
+    @FindBy(xpath = "//span[text()='Area']")
+    private WebElement areaHeaderOfTable;
+
+    @FindBy(xpath = "//span[contains(@class, 'sortLabel')]/*")
+    private WebElement filterMarkerOfTableHeader;
+
+    @FindBy(xpath = "//button[@title='Clear']")
+    private List<WebElement> cmbbxClearButtons;
+
     public ProjectsPage(WebDriver driver) {
         super(driver);
     }
 
+    @Step("Clicks 'Clear' button")
+    public ProjectsPage clearFilters(){
+        clrButton.click();
+        return this;
+    }
+
     @Step("Checks 'clear button' status")
     public void verifyChckButtonStatus(boolean expectedResult){
-        Assert.assertEquals(clrButton.isEnabled(), expectedResult);
+        assertThat(clrButton.isEnabled())
+                .as("'Clear' button should be disabled when there are no filtered values")
+                .isEqualTo(expectedResult);
     }
 
     @Step("Gets name of searchable project")
@@ -60,8 +87,9 @@ public class ProjectsPage extends BasePage {
     @Step("Verifies value of input and appeared element")
     public void verifyInputAndAppearedValueEquals(String value)
     {
-        Assert.assertEquals(driver.findElement(By.xpath("//*[contains(text(), '" + value + "')]/..//input")).getText(),
-                driver.findElement(getElementFromList(value)).getText());
+        assertThat(driver.findElement(By.xpath("//*[contains(text(), '" + value + "')]/..//input")).getText())
+                .as("Input and appeared values in combobox should be matched")
+                .contains(driver.findElement(getElementFromList(value)).getText());
     }
 
     @Step("Chooses searchable element from list in combobox")
@@ -114,7 +142,59 @@ public class ProjectsPage extends BasePage {
 
     @Step("Verifies, are checkboxes selected or not")
     public void verifySelectedCheckboxes(boolean expectedResult){
-        Assert.assertEquals(managedByMeCheckbox.isSelected() && caseStudyCheckbox.isSelected() && activeProjectsCheckbox.isSelected(),
-                expectedResult);
+        assertThat(managedByMeCheckbox.isSelected() && caseStudyCheckbox.isSelected() && activeProjectsCheckbox.isSelected())
+                .as("Checkboxes selected incorrectly")
+                .isEqualTo(expectedResult);
+    }
+
+    @Step("Filters column header by its status")
+    public ProjectsPage filterByStatusHeader(){
+        statusHeaderOfTable.click();
+        return this;
+    }
+
+    @Step("Filters column header by its area")
+    public ProjectsPage filterByAreaHeader(){
+        areaHeaderOfTable.click();
+        return this;
+    }
+
+    @Step("Verifies clear status after discarding the filters of column headers")
+    public void verifyHeadingsClearFilters(){
+        assertThat(filterMarkerOfTableHeader.isDisplayed())
+                .as("Marker should disappear after discarding")
+                .isEqualTo(false);
+    }
+
+    @Step("Clears chosen filter by value in combobox field")
+    public ProjectsPage discardCmbbxValueByXmark(String value){
+        driver.findElement(By.xpath("//span[text()='" + value + "']/following-sibling::*")).click();
+        return this;
+    }
+
+    @Step("Clears existing combobox values from its fields")
+    public ProjectsPage clearCmbbxValues(){
+//        cmbbxClearButtons.stream().filter(WebElement::isDisplayed).forEach(WebElement::click);
+        for (int i = 0; i < cmbbxClearButtons.size(); i++) {
+            WebElement element = cmbbxClearButtons.get(i);
+            if (element.isDisplayed()) {
+                element.click();
+            }
+        }
+        return this;
+    }
+
+    @Step("Verifies discards of clear operation")
+    public void verifiesDiscardingFields(Comboboxes cmbbx, boolean expectedResult){
+        boolean actualResult;
+        try {
+            driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//input/../div[1][@role='button']"));
+            actualResult = true;
+        } catch (NoSuchElementException e) {
+            actualResult = false;
+        }
+        assertThat(actualResult)
+                .as("Filtered element from list shouldn't be present on page")
+                .isEqualTo(expectedResult);
     }
 }

@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeTest;
 @Slf4j
 public class BaseTest {
     protected WebDriver driver;
-    protected ProjectsPage projectsPage;
+    protected static ProjectsPage projectsPage;
 
     @BeforeMethod
     @Story("Logins on site with corporate mail")

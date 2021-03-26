@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class CaseStudiesPage extends BasePage {
     private JavascriptExecutor js;
     public CaseStudiesPage(WebDriver driver) {
@@ -172,11 +174,16 @@ public class CaseStudiesPage extends BasePage {
     @Step("Verify 'save' button status")
     public void verifySaveButtonStatus(boolean expectedStatus){
         Assert.assertEquals(saveStudyButton.isEnabled(), expectedStatus);
+        assertThat(saveStudyButton.isEnabled())
+                .as("'Save' button status is incorrect")
+                .isEqualTo(expectedStatus);
     }
 
     @Step("Verify if case study's creator form opened")
     public void verifyOpenedStudyCreator(boolean expectedStatus){
-        Assert.assertEquals(summaryInputFld.isDisplayed(), expectedStatus);
+        assertThat(summaryInputFld.isDisplayed())
+                .as("Study's creator form should be opened")
+                .isEqualTo(expectedStatus);
     }
 
 }

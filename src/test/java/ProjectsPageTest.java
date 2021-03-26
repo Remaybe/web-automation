@@ -1,13 +1,35 @@
 import io.qameta.allure.Feature;
 import lombok.SneakyThrows;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Feature("Filtering the projects")
 public class ProjectsPageTest extends BaseTest {
 
+    @DataProvider(name = "AreasFilters")
+    public static Object[][] filtersAreasData(){
+        return new Object[][] {
+                {Arrays.asList("PMO")},
+                {Arrays.asList("PMO", "e-commerce", "Test")}
+        };
+    }
+
+    @Test(dataProvider = "AreasFilters",
+            description = "Discards input values in combobox by itself")
+    @Ignore
+    public void discardFiltersInsideCombobox(List<String> value){
+        value.stream().forEach(v -> projectsPage.filterByCmbbxValue(Comboboxes.AREAS, v));
+        projectsPage.clearCmbbxValues()
+                .verifiesDiscardingFields(Comboboxes.AREAS, false);
+    }
+
     @SneakyThrows
     @Test(description = "Search for project using comboboxes")
+    @Ignore
     public void searchUsingCmbbxs(){
         String prjctName = "Mobile app";
         projectsPage
@@ -18,21 +40,50 @@ public class ProjectsPageTest extends BaseTest {
     }
 
     @Test(description = "Tests 'clear' button without filter values")
+    @Ignore
     public void clrButtonStatusWithoutValues(){
         projectsPage.verifyChckButtonStatus(false);
     }
 
     @Test(description = "Filtering by selecting all checkboxes")
+    @Ignore
     public void filterWithCheckboxes(){
         projectsPage.selectAllCheckboxes()
                 .verifySelectedCheckboxes(true);
     }
 
     @Test(description = "Equals input value and appeared from list in current combobox")
+    @Ignore
     public void checkCmbbxValueFromList(){
         String value = "Chose";
         projectsPage.inputCmbbxValue(Comboboxes.AREAS, value)
                 .verifyInputAndAppearedValueEquals(value);
     }
+
+    @Test(description = "Verifies if filters of headers were cleared")
+    @Ignore
+    public void discardFiltersByColumnHeaders(){
+        projectsPage.filterByStatusHeader()
+                .filterByAreaHeader()
+                .clearFilters()
+                .verifyHeadingsClearFilters();
+    }
+
+    @Test
+    @Ignore
+    public void discardCheckboxFilter(){
+        projectsPage.selectActiveProjectsCheckbox()
+                .clearFilters()
+                .verifySelectedCheckboxes(false);
+    }
+
+    @Test
+    @Ignore
+    public void discardFilterByDeselecting(){
+        projectsPage.filterByCmbbxValue(Comboboxes.AREAS, "Test")
+                .discardCmbbxValueByXmark("Test")
+                .verifiesDiscardingFields(Comboboxes.AREAS, false);
+    }
+
 
 }
