@@ -1,5 +1,4 @@
 import io.qameta.allure.Feature;
-import lombok.SneakyThrows;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -25,14 +24,17 @@ public class ProjectsPageTest extends BaseTest {
                 .verifiesDiscardingFields(Comboboxes.AREAS, false);
     }
 
-    @SneakyThrows
     @Test(description = "Search for project using comboboxes")
     public void searchUsingCmbbxs(){
         String prjctName = "Mobile app";
         projectsPage
                 .filterByCmbbxValue(Comboboxes.ACCOUNTS, "Coleman")
                 .filterByCmbbxValue(Comboboxes.PROJECTS, prjctName);
-        Thread.sleep(1000);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         projectsPage.verifySrchblProject(prjctName);
     }
 

@@ -1,10 +1,7 @@
 import io.qameta.allure.Step;
-import lombok.SneakyThrows;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -123,7 +120,6 @@ public class CaseStudiesPage extends BasePage {
         return this;
     }
 
-    @SneakyThrows
     @Step("Verifies match of uploaded image on 'Solution' field of 'Case Study'")
     public CaseStudiesPage verifyUploadedImgOnSolutionFld(){
         boolean isUploaded = false;
@@ -206,10 +202,13 @@ public class CaseStudiesPage extends BasePage {
         return this;
     }
 
-    @SneakyThrows
     @Step("Uploads an image into the field")
     public CaseStudiesPage uploadImg(String file) {
-        Thread.sleep(500);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         insImgButton.click();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
@@ -217,7 +216,11 @@ public class CaseStudiesPage extends BasePage {
                 "display",
                 "inline");
         inputImg.sendKeys(file);
-        returnFocusOnWindow();
+        try {
+            returnFocusOnWindow();
+        } catch (AWTException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -266,11 +269,14 @@ public class CaseStudiesPage extends BasePage {
         return this;
     }
 
-    @SneakyThrows
     @Step("Saves current case study")
     public CaseStudiesPage saveStudy(){
         saveStudyButton.click();
-        Thread.sleep(1000);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
