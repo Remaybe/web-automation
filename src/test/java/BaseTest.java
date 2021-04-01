@@ -23,10 +23,10 @@ public class BaseTest {
         log.info("Sets up chosen browser from factory, opens the site and input value for logging in");
     }
 
-//    @AfterMethod
-//    @Story("Closes the browser")
-//    public void tearDown(){
-//        driver.quit();
-//        log.info("Closes the browser after test method");
-//    }
+    @AfterMethod
+    @Story("Closes the browser")
+    public void tearDown(){
+        driver.quit();
+        log.info("Closes the browser after test method");
+    }
 }
