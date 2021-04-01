@@ -1,7 +1,6 @@
 import io.qameta.allure.Feature;
 import lombok.SneakyThrows;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -20,7 +19,6 @@ public class ProjectsPageTest extends BaseTest {
 
     @Test(dataProvider = "AreasFilters",
             description = "Discards input values in combobox by itself")
-    @Ignore
     public void discardFiltersInsideCombobox(List<String> value){
         value.stream().forEach(v -> projectsPage.filterByCmbbxValue(Comboboxes.AREAS, v));
         projectsPage.clearCmbbxValues()
@@ -29,7 +27,6 @@ public class ProjectsPageTest extends BaseTest {
 
     @SneakyThrows
     @Test(description = "Search for project using comboboxes")
-    @Ignore
     public void searchUsingCmbbxs(){
         String prjctName = "Mobile app";
         projectsPage
@@ -40,20 +37,17 @@ public class ProjectsPageTest extends BaseTest {
     }
 
     @Test(description = "Tests 'clear' button without filter values")
-    @Ignore
     public void clrButtonStatusWithoutValues(){
         projectsPage.verifyChckButtonStatus(false);
     }
 
     @Test(description = "Filtering by selecting all checkboxes")
-    @Ignore
     public void filterWithCheckboxes(){
         projectsPage.selectAllCheckboxes()
                 .verifySelectedCheckboxes(true);
     }
 
     @Test(description = "Equals input value and appeared from list in current combobox")
-    @Ignore
     public void checkCmbbxValueFromList(){
         String value = "Chose";
         projectsPage.inputCmbbxValue(Comboboxes.AREAS, value)
@@ -61,7 +55,6 @@ public class ProjectsPageTest extends BaseTest {
     }
 
     @Test(description = "Verifies if filters of headers were cleared")
-    @Ignore
     public void discardFiltersByColumnHeaders(){
         projectsPage.filterByStatusHeader()
                 .filterByAreaHeader()
@@ -69,21 +62,30 @@ public class ProjectsPageTest extends BaseTest {
                 .verifyHeadingsClearFilters();
     }
 
-    @Test
-    @Ignore
+    @Test(description = "Discard filter by clearing combobox input values with X-marker")
     public void discardCheckboxFilter(){
         projectsPage.selectActiveProjectsCheckbox()
                 .clearFilters()
                 .verifySelectedCheckboxes(false);
     }
 
-    @Test
-    @Ignore
+    @Test(description = "Discard filter by deselecting chosen item in combobox")
     public void discardFilterByDeselecting(){
         projectsPage.filterByCmbbxValue(Comboboxes.AREAS, "Test")
                 .discardCmbbxValueByXmark("Test")
                 .verifiesDiscardingFields(Comboboxes.AREAS, false);
     }
 
+    @Test(description = "Verifies 'Last Page' button in pagination on the last page")
+    public void checkNextPageButtonOnLastPage(){
+        projectsPage.navigateToOrderedPage(84)
+                .verifyIfNextPageButtonDisabled();
+    }
 
+    @Test(description = "Verifies 'First Page' button in pagination")
+    public void paginationButtonsCheck(){
+        projectsPage.navigateToOrderedPage(3)
+                .clickFirstPage()
+                .verifyIfFirstPageButtonSelected();
+    }
 }

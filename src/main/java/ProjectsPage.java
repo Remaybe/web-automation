@@ -1,5 +1,3 @@
-import io.qameta.allure.Allure;
-import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -13,6 +11,12 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ProjectsPage extends BasePage {
+
+    @FindBy(xpath = "//ul[contains(@class, 'Pagination')]/li[1]/button")
+    private WebElement paginationFirstPage;
+
+    @FindBy(xpath = "//ul[contains(@class, 'Pagination')]/li[8]/button")
+    private WebElement paginationNextPage;
 
     @FindBy(xpath = "//h6[contains(@class, 'colorTextPrimary')]")
     private WebElement projectHeader;
@@ -174,7 +178,6 @@ public class ProjectsPage extends BasePage {
 
     @Step("Clears existing combobox values from its fields")
     public ProjectsPage clearCmbbxValues(){
-//        cmbbxClearButtons.stream().filter(WebElement::isDisplayed).forEach(WebElement::click);
         for (int i = 0; i < cmbbxClearButtons.size(); i++) {
             WebElement element = cmbbxClearButtons.get(i);
             if (element.isDisplayed()) {
@@ -184,8 +187,8 @@ public class ProjectsPage extends BasePage {
         return this;
     }
 
-    @Step("Verifies discards of clear operation")
-    public void verifiesDiscardingFields(Comboboxes cmbbx, boolean expectedResult){
+    @Step("Returns 'False', if there is no values in chosen combobox field")
+    public boolean checksElementInCmbbxFld(Comboboxes cmbbx){
         boolean actualResult;
         try {
             driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//input/../div[1][@role='button']"));
@@ -193,8 +196,51 @@ public class ProjectsPage extends BasePage {
         } catch (NoSuchElementException e) {
             actualResult = false;
         }
-        assertThat(actualResult)
+        return actualResult;
+    }
+
+    @Step("Verifies discards of clear operation")
+    public void verifiesDiscardingFields(Comboboxes cmbbx, boolean expectedResult){
+        assertThat(checksElementInCmbbxFld(cmbbx))
                 .as("Filtered element from list shouldn't be present on page")
                 .isEqualTo(expectedResult);
+    }
+
+    @Step("Return button to navigate on page by its number")
+    public WebElement getPageByNumber(int numberOfPage){
+        return driver.findElement(By.xpath("//ul[contains(@class, 'Pagination')]/li/button[text()='" + numberOfPage + "']"));
+    }
+
+    @Step("Move to ordered page using pagination element")
+    public ProjectsPage navigateToOrderedPage(int numberOfPage){
+        this.getPageByNumber(numberOfPage).click();
+        return this;
+    }
+
+    @Step("Verifies if navigate button clickable in pagination")
+    public void verifyIfNavigateButtonClickable(int numberOfPage, boolean expectedResult){
+        assertThat(getPageByNumber(numberOfPage).isEnabled())
+                .as("Button should be clickable if weren't selected")
+                .isEqualTo(expectedResult);
+    }
+
+    @Step("Verifies if 'Next Page' button is disabled")
+    public void verifyIfNextPageButtonDisabled(){
+        assertThat(paginationNextPage.isEnabled())
+                .as("Button shouldn't be enabled")
+                .isEqualTo(false);
+    }
+
+    @Step("Verifies if 'First Page' button is disabled")
+    public void verifyIfFirstPageButtonSelected(){
+        assertThat(paginationNextPage.isEnabled())
+                .as("Button shouldn't be enabled")
+                .isEqualTo(false);
+    }
+
+    @Step("Moves to first page of projects list")
+    public ProjectsPage clickFirstPage(){
+        paginationFirstPage.click();
+        return this;
     }
 }

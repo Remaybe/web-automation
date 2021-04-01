@@ -3,9 +3,7 @@ import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 
 @Feature("Authorization on site")
 @Slf4j
@@ -25,10 +23,10 @@ public class BaseTest {
         log.info("Sets up chosen browser from factory, opens the site and input value for logging in");
     }
 
-    @AfterMethod
-    @Story("Closes the browser")
-    public void tearDown(){
-        driver.quit();
-        log.info("Closes the browser after test method");
-    }
+//    @AfterMethod
+//    @Story("Closes the browser")
+//    public void tearDown(){
+//        driver.quit();
+//        log.info("Closes the browser after test method");
+//    }
 }

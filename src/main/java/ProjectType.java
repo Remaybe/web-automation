@@ -1,11 +1,12 @@
 import io.qameta.allure.Step;
 
 public enum ProjectType {
-    SUNFLOWER {
-        @Step("Opens case study's page of 'Sunflower' project")
+    AEO {
+        @Step("Opens case study's page of 'AEO / TO - BSA' project")
         public CaseStudiesPage getStudiesPage(ProjectsPage projectsPage) {
             projectsPage
-                    .filterByCmbbxValue(Comboboxes.AREAS, "Fraud Detection");
+                    .filterByCmbbxValue(Comboboxes.ACCOUNTS, "AEO")
+                    .filterByCmbbxValue(Comboboxes.PROJECTS, "TO - BSA");
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {

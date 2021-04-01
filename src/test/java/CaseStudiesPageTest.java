@@ -1,33 +1,45 @@
 import io.qameta.allure.Feature;
-import org.testng.annotations.Ignore;
+import lombok.SneakyThrows;
 import org.testng.annotations.Test;
 
 @Feature("Creating of case study")
 public class CaseStudiesPageTest extends BaseTest {
     private CaseStudiesPage caseStudies;
+    private GraphQueryPage graphQueryPage;
 
+    @SneakyThrows
     @Test(description = "Creates valid case study with image uploading")
-    @Ignore
     public void creatingTestCaseStudy(){
         String img = System.getProperty("user.dir") + "/testscreen.png";
-        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
+        String text = "Some text";
+        String studyName = "remaybestudy";
+        caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
-                .setStudiesName("Name")
-                .fillAllFldsOnFirstStep("some text")
+                .setStudiesName(studyName)
+                .verifyNameMatchExamplePattern(studyName)
+                .fillAllFldsOnFirstStep(text)
+                .verifySummaryMatchExamplePattern(text)
+                .verifyChallengeMatchExamplePattern(text)
+                .verifyKeyChallengeMatchExamplePattern(text)
                 .clickContinue()
-                .uploadImg(img);  // problem
-//                .clickContinue()
-//                .fillAllFldsOnThirdStep("some text")
-//                .clickDiscard()
-//                .fillAllFldsOnThirdStep("some new text")
-//                .saveStudy();
+                .uploadImg(img)
+                .verifyUploadedImgOnSolutionFld()
+                .clickContinue()
+                .fillAllFldsOnThirdStep(text)
+                .verifyAchievedResultMatchExamplePattern(text)
+                .verifyKeyFiguresMatchExamplePattern(text)
+                .clickDiscard()
+                .fillAllFldsOnThirdStep("some new text")
+                .saveStudy()
+                .verifyCreatedCaseStudy(studyName)
+                .verifyAll();
+        graphQueryPage.deleteCaseStudy(studyName);
     }
 
     @Test(description = "Creates case study with no input values")
-    @Ignore
     public void createStudyWithoutInput(){
-        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
+        caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
                 .saveStudy()
@@ -35,9 +47,8 @@ public class CaseStudiesPageTest extends BaseTest {
     }
 
     @Test(description = "Creates case study only by filling 'name' field")
-    @Ignore
     public void createStudyOnlyWithName(){
-        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
+        caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
                 .setStudiesName("Some name")
@@ -46,9 +57,8 @@ public class CaseStudiesPageTest extends BaseTest {
     }
 
     @Test(description = "Opens creator of case study form immediately after saving the previous one")
-    @Ignore
     public void createStudyImmediatelyAfterPrevious(){
-        caseStudies = ProjectType.SUNFLOWER.getStudiesPage(projectsPage);
+        caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
                 .setStudiesName("Some name")
