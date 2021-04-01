@@ -112,7 +112,7 @@ public class ProjectsPage extends BasePage {
     @Step("Opens project from project's table")
     public CaseStudiesPage openProject(){
         waitUtils = new WaitUtils(driver);
-        waitUtils.waitForVisibilityElement(searchableProjectFromList);
+        WaitUtils.waitForVisibilityElement(searchableProjectFromList);
         searchableProjectFromList.click();
         return new CaseStudiesPage(driver);
     }
@@ -120,7 +120,7 @@ public class ProjectsPage extends BasePage {
     @Step("Verify if project has been found")
     public void verifySrchblProject(String header){
         waitUtils = new WaitUtils(driver);
-        waitUtils.waitForVisibilityElement(projectHeader);
+        WaitUtils.waitForVisibilityElement(projectHeader);
         Assert.assertEquals(projectHeader.getText(), header);
     }
 

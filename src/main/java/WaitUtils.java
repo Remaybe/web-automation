@@ -6,13 +6,13 @@ import java.time.Duration;
 
 public class WaitUtils {
 
-    private WebDriver driver;
+    private static WebDriver driver;
 
     public WaitUtils(WebDriver driver) {
         this.driver = driver;
     }
 
-    private FluentWait getWait() {
+    private static FluentWait getWait() {
         Duration duration = Duration.ofSeconds(20);
         Duration pollingDuration = Duration.ofSeconds(5);
         return new FluentWait<WebDriver>(driver)
@@ -26,7 +26,7 @@ public class WaitUtils {
         getWait().until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void waitForVisibilityElement(WebElement element) {
+    public static void waitForVisibilityElement(WebElement element) {
         getWait().until(ExpectedConditions.visibilityOf(element));
     }
 }

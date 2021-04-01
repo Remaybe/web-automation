@@ -206,8 +206,7 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Uploads an image into the field")
     public CaseStudiesPage uploadImg(String file) {
-        waitUtils = new WaitUtils(driver);
-        waitUtils.waitForVisibilityElement(insImgButton);
+        WaitUtils.waitForVisibilityElement(insImgButton);
         insImgButton.click();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",

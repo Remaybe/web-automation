@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 @Slf4j
 public class BasePage {
     WebDriver driver;
+    
     protected SoftAssertions softAssertions = new SoftAssertions();
     public BasePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
