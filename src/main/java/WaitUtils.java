@@ -6,11 +6,9 @@ import java.time.Duration;
 
 public class WaitUtils {
 
-    private static WebDriver driver;
+    private static WebDriver driver = ChromeBrowser.getCurrentDriver();
 
-    public WaitUtils(WebDriver driver) {
-        this.driver = driver;
-    }
+    
 
     private static FluentWait getWait() {
         Duration duration = Duration.ofSeconds(20);
