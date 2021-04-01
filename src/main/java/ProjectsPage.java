@@ -12,6 +12,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ProjectsPage extends BasePage {
 
+    private WaitUtils waitUtils;
+
     @FindBy(xpath = "//ul[contains(@class, 'Pagination')]/li[1]/button")
     private WebElement paginationFirstPage;
 
@@ -109,12 +111,16 @@ public class ProjectsPage extends BasePage {
 
     @Step("Opens project from project's table")
     public CaseStudiesPage openProject(){
+        waitUtils = new WaitUtils(driver);
+        waitUtils.waitForVisibilityElement(searchableProjectFromList);
         searchableProjectFromList.click();
         return new CaseStudiesPage(driver);
     }
 
     @Step("Verify if project has been found")
     public void verifySrchblProject(String header){
+        waitUtils = new WaitUtils(driver);
+        waitUtils.waitForVisibilityElement(projectHeader);
         Assert.assertEquals(projectHeader.getText(), header);
     }
 

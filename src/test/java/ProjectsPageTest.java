@@ -29,13 +29,8 @@ public class ProjectsPageTest extends BaseTest {
         String prjctName = "Mobile app";
         projectsPage
                 .filterByCmbbxValue(Comboboxes.ACCOUNTS, "Coleman")
-                .filterByCmbbxValue(Comboboxes.PROJECTS, prjctName);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        projectsPage.verifySrchblProject(prjctName);
+                .filterByCmbbxValue(Comboboxes.PROJECTS, prjctName)
+                .verifySrchblProject(prjctName);
     }
 
     @Test(description = "Tests 'clear' button without filter values")

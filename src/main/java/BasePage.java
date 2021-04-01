@@ -17,14 +17,18 @@ public class BasePage {
     }
 
     @Story("Closes pop-up window, returning focus on previous window in browser")
-    public BasePage returnFocusOnWindow() throws AWTException, InterruptedException {
-        Robot bot = new Robot();
-        bot.mouseMove(120, 50);
-        bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        Thread.sleep(1000);
-        bot.keyPress(KeyEvent.VK_ESCAPE);
-        bot.keyRelease(KeyEvent.VK_ESCAPE);
+    public BasePage returnFocusOnWindow() {
+        try {
+            Robot bot = new Robot();
+            bot.mouseMove(120, 50);
+            bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            Thread.sleep(1000);
+            bot.keyPress(KeyEvent.VK_ESCAPE);
+            bot.keyRelease(KeyEvent.VK_ESCAPE);
+        } catch (AWTException | InterruptedException e) {
+            e.printStackTrace();
+        }
         log.info("Creates bot, which will return focus on window in browser by closing excess pop-up window");
         return this;
     }

@@ -1,13 +1,15 @@
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import java.awt.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class CaseStudiesPage extends BasePage {
+
     private JavascriptExecutor js;
+    private WaitUtils waitUtils;
+
     public CaseStudiesPage(WebDriver driver) {
         super(driver);
     }
@@ -204,11 +206,8 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Uploads an image into the field")
     public CaseStudiesPage uploadImg(String file) {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitUtils = new WaitUtils(driver);
+        waitUtils.waitForVisibilityElement(insImgButton);
         insImgButton.click();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
@@ -216,11 +215,7 @@ public class CaseStudiesPage extends BasePage {
                 "display",
                 "inline");
         inputImg.sendKeys(file);
-        try {
-            returnFocusOnWindow();
-        } catch (AWTException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        returnFocusOnWindow();
         return this;
     }
 
@@ -272,11 +267,6 @@ public class CaseStudiesPage extends BasePage {
     @Step("Saves current case study")
     public CaseStudiesPage saveStudy(){
         saveStudyButton.click();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return this;
     }
 

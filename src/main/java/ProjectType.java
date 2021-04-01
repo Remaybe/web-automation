@@ -7,11 +7,6 @@ public enum ProjectType {
             projectsPage
                     .filterByCmbbxValue(Comboboxes.ACCOUNTS, "AEO")
                     .filterByCmbbxValue(Comboboxes.PROJECTS, "TO - BSA");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return projectsPage.openProject();
         }
     };
