@@ -1,6 +1,9 @@
+package page.objects;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import other.utils.WaitUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -78,13 +81,19 @@ public class CaseStudiesPage extends BasePage {
     private WebElement discardButton;
 
     @FindBy(xpath = "//span[text()='Problem statement']")
-    private WebElement firstStepLink;
+    private WebElement problemStatementStepLink;
 
     @FindBy(xpath = "//span[text()='Proposed solution']")
-    private WebElement secondStepLink;
+    private WebElement proposedSolutionStepLink;
 
     @FindBy(xpath = "//span[text()='Achieved result']")
-    private WebElement thirdStepLink;
+    private WebElement achievedResultStepLink;
+
+    @FindBy(xpath = "//span[text()='Abstract']")
+    private WebElement abstractStepLink;
+
+    @FindBy(xpath = "//label[text()='Practices']/following-sibling::div//button[contains(@class, 'popup')]")
+    private WebElement abstractCmbbxButton;
 
     @Step("Verifies is study's name matches itself on example pattern")
     public CaseStudiesPage verifyNameMatchExamplePattern(String name){
@@ -232,24 +241,30 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Moves to the first step of case study creator")
     public CaseStudiesPage moveToFirstStep(){
-        firstStepLink.click();
+        abstractStepLink.click();
         return this;
     }
 
     @Step("Moves to the second step of case study creator")
     public CaseStudiesPage moveToSecondStep(){
-        secondStepLink.click();
+        problemStatementStepLink.click();
         return this;
     }
 
     @Step("Moves to the third step of case study creator")
     public CaseStudiesPage moveToThirdStep(){
-        thirdStepLink.click();
+        proposedSolutionStepLink.click();
+        return this;
+    }
+
+    @Step("Moves to the fourth step of case study creator")
+    public CaseStudiesPage moveToFourthStep(){
+        achievedResultStepLink.click();
         return this;
     }
 
     @Step("Fills all fields on first step with some text")
-    public CaseStudiesPage fillAllFldsOnFirstStep(String text) {
+    public CaseStudiesPage fillAllFldsOnSecondStep(String text) {
         this.inputChallenge(text)
                 .inputSummary(text)
                 .inputKeyChallenges(text);
@@ -257,7 +272,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Fills all fields on third step with some text")
-    public CaseStudiesPage fillAllFldsOnThirdStep(String text){
+    public CaseStudiesPage fillAllFldsOnFourthStep(String text){
         this.inputAchievedRslt(text)
                 .inputKeyFigures(text);
         return this;
@@ -278,7 +293,7 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Verify if case study's creator form opened")
     public void verifyOpenedStudyCreator(boolean expectedStatus){
-        assertThat(summaryInputFld.isDisplayed())
+        assertThat(abstractStepLink.isDisplayed())
                 .as("Study's creator form should be opened")
                 .isEqualTo(expectedStatus);
     }

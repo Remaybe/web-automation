@@ -1,5 +1,7 @@
 import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
+import other.utils.ProjectType;
+import page.objects.CaseStudiesPage;
 
 @Feature("Creating of case study")
 public class CaseStudiesPageTest extends BaseTest {
@@ -15,7 +17,8 @@ public class CaseStudiesPageTest extends BaseTest {
                 .openStudyCreator()
                 .setStudiesName(studyName)
                 .verifyNameMatchExamplePattern(studyName)
-                .fillAllFldsOnFirstStep(text)
+                .moveToSecondStep()
+                .fillAllFldsOnSecondStep(text)
                 .verifySummaryMatchExamplePattern(text)
                 .verifyChallengeMatchExamplePattern(text)
                 .verifyKeyChallengeMatchExamplePattern(text)
@@ -23,11 +26,11 @@ public class CaseStudiesPageTest extends BaseTest {
                 .uploadImg(img)
                 .verifyUploadedImgOnSolutionFld()
                 .clickContinue()
-                .fillAllFldsOnThirdStep(text)
+                .fillAllFldsOnFourthStep(text)
                 .verifyAchievedResultMatchExamplePattern(text)
                 .verifyKeyFiguresMatchExamplePattern(text)
                 .clickDiscard()
-                .fillAllFldsOnThirdStep("some new text")
+                .fillAllFldsOnFourthStep("some new text")
 //                .saveStudy()
 //                .verifyCreatedCaseStudy(studyName)
                 .verifyAll();
@@ -38,7 +41,6 @@ public class CaseStudiesPageTest extends BaseTest {
         caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
-                .saveStudy()
                 .verifySaveButtonStatus(false);
     }
 
@@ -48,7 +50,6 @@ public class CaseStudiesPageTest extends BaseTest {
         caseStudies
                 .openStudyCreator()
                 .setStudiesName("Some name")
-                .saveStudy()
                 .verifySaveButtonStatus(true);
     }
 
@@ -57,7 +58,7 @@ public class CaseStudiesPageTest extends BaseTest {
         caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
         caseStudies
                 .openStudyCreator()
-                .setStudiesName("Some name")
+                .setStudiesName("Some name1")
                 .saveStudy()
                 .openStudyCreator()
                 .verifyOpenedStudyCreator(true);

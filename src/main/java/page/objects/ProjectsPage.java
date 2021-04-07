@@ -1,3 +1,5 @@
+package page.objects;
+
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -5,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+import other.utils.Comboboxes;
+import other.utils.WaitUtils;
 
 import java.util.List;
 
@@ -54,6 +58,14 @@ public class ProjectsPage extends BasePage {
         super(driver);
     }
 
+    public WebElement getCmmbxInput(Comboboxes cmbbx){
+        return driver.findElement(By.xpath("//label[text()='" + cmbbx.getString() + "']/following-sibling::div/input"));
+    }
+
+    public WebElement getCmbbxButton(Comboboxes cmbbx){
+        return driver.findElement(By.xpath("//label[text()='" + cmbbx.getString() + "']/following-sibling::div//button[contains(@class, 'popup')]"));
+    }
+
     @Step("Clicks 'Clear' button")
     public ProjectsPage clearFilters(){
         clrButton.click();
@@ -74,13 +86,13 @@ public class ProjectsPage extends BasePage {
 
     @Step("Opens list of values in chosen combobox")
     public ProjectsPage clickCmbbxButton(Comboboxes cmbbx){
-        driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//button[2]")).click();
+        getCmbbxButton(cmbbx).click();
         return this;
     }
 
     @Step("Fills chosen combobox field with some text")
     public ProjectsPage inputCmbbxValue(Comboboxes cmbbx, String value){
-        driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//input")).sendKeys(value);
+        getCmmbxInput(cmbbx).sendKeys(value);
         return this;
     }
 

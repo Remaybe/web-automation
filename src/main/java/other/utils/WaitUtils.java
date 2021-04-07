@@ -1,3 +1,6 @@
+package other.utils;
+
+import browser.factory.Browser;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -6,9 +9,7 @@ import java.time.Duration;
 
 public class WaitUtils {
 
-    private static WebDriver driver = ChromeBrowser.getCurrentDriver();
-
-    
+    private static WebDriver driver = Browser.getCurrentDriver();
 
     private static FluentWait getWait() {
         Duration duration = Duration.ofSeconds(20);

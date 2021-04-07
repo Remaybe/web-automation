@@ -18,6 +18,8 @@
         <allureJunit.verison>LATEST</allureJunit.verison>
         <surefire.version>LATEST</surefire.version>
         <lombok.version>1.18.16</lombok.version>
+        <test.graphql.verion>1.0.0</test.graphql.verion>
+        <okhttp.version>2.7.5</okhttp.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
@@ -53,6 +55,16 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vimalselvam</groupId>
+            <artifactId>test-graphql-java</artifactId>
+            <version>${test.graphql.verion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
         </dependency>
     </dependencies>
 

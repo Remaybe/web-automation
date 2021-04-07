@@ -1,0 +1,6 @@
+{
+  caseStudies {
+    id
+    name
+  }
+}

@@ -1,6 +1,7 @@
 import io.qameta.allure.Feature;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import other.utils.Comboboxes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,28 +9,28 @@ import java.util.List;
 @Feature("Filtering the projects")
 public class ProjectsPageTest extends BaseTest {
 
-    @DataProvider(name = "AreasFilters")
-    public static Object[][] filtersAreasData(){
+    @DataProvider(name = "ProjectFilters")
+    public static Object[][] filtersProjectData(){
         return new Object[][] {
-                {Arrays.asList("PMO")},
-                {Arrays.asList("PMO", "e-commerce", "Test")}
+                {Arrays.asList("PMO SOW8")},
+                {Arrays.asList("PMO SOW8", "Cisco DevTest", "Administration")}
         };
     }
 
-    @Test(dataProvider = "AreasFilters",
+    @Test(dataProvider = "ProjectFilters",
             description = "Discards input values in combobox by itself")
     public void discardFiltersInsideCombobox(List<String> value){
-        value.stream().forEach(v -> projectsPage.filterByCmbbxValue(Comboboxes.AREAS, v));
+        value.stream().forEach(v -> projectsPage.filterByCmbbxValue(Comboboxes.PROJECT, v));
         projectsPage.clearCmbbxValues()
-                .verifiesDiscardingFields(Comboboxes.AREAS, false);
+                .verifiesDiscardingFields(Comboboxes.PROJECT, false);
     }
 
     @Test(description = "Search for project using comboboxes")
     public void searchUsingCmbbxs(){
         String prjctName = "Mobile app";
         projectsPage
-                .filterByCmbbxValue(Comboboxes.ACCOUNTS, "Coleman")
-                .filterByCmbbxValue(Comboboxes.PROJECTS, prjctName)
+                .filterByCmbbxValue(Comboboxes.ACCOUNT, "Coleman")
+                .filterByCmbbxValue(Comboboxes.PROJECT, prjctName)
                 .verifySrchblProject(prjctName);
     }
 
@@ -46,8 +47,8 @@ public class ProjectsPageTest extends BaseTest {
 
     @Test(description = "Equals input value and appeared from list in current combobox")
     public void checkCmbbxValueFromList(){
-        String value = "Chose";
-        projectsPage.inputCmbbxValue(Comboboxes.AREAS, value)
+        String value = "React";
+        projectsPage.inputCmbbxValue(Comboboxes.TECHNOLOGY, value)
                 .verifyInputAndAppearedValueEquals(value);
     }
 
@@ -68,9 +69,9 @@ public class ProjectsPageTest extends BaseTest {
 
     @Test(description = "Discard filter by deselecting chosen item in combobox")
     public void discardFilterByDeselecting(){
-        projectsPage.filterByCmbbxValue(Comboboxes.AREAS, "Test")
-                .discardCmbbxValueByXmark("Test")
-                .verifiesDiscardingFields(Comboboxes.AREAS, false);
+        projectsPage.filterByCmbbxValue(Comboboxes.PROJECT, "Administration")
+                .discardCmbbxValueByXmark("Administration")
+                .verifiesDiscardingFields(Comboboxes.PROJECT, false);
     }
 
     @Test(description = "Verifies 'Last Page' button in pagination on the last page")

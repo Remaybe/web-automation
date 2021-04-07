@@ -1,3 +1,5 @@
+package page.objects;
+
 import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
