@@ -103,10 +103,6 @@ public class CaseStudiesPage extends BasePage {
         return this;
     }
 
-    public void ver(){
-        boolean s = achievedRsltFld.getAttribute("class").contains("ql-blank");  // need true
-    }
-
     @Step("Verifies is 'Summary' matches itself on example pattern")
     public CaseStudiesPage verifySummaryMatchExamplePattern(String summary){
         softAssertions.assertThat(summaryExamplePattern.getText())
@@ -133,14 +129,16 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Verifies match of uploaded image on 'Solution' field of 'Case Study'")
     public CaseStudiesPage verifyUploadedImgOnSolutionFld(){
-        boolean isUploaded = false;
+        boolean isUploaded;
         try {
             driver.findElement(By.xpath("//header[contains(@class, 'pageHeader')]/..//div[contains(@class, 'solution__description')]/p/img"));
             isUploaded = true;
-        } catch (Exception n) {}
+        } catch (NoSuchElementException n) {
+            isUploaded = false;
+        }
         softAssertions.assertThat(isUploaded)
                 .as("Image doesn't match on example pattern of 'Case Study' or wasn't uploaded")
-                .isEqualTo(true);
+                .isTrue();
         return this;
     }
 
@@ -302,7 +300,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Returns true, if Case Study by that name was created")
-    public boolean checkStudyFromListByName(String caseStudyName){
+    public boolean isCaseStudyCreatedByName(String caseStudyName){
         boolean isPresent;
         try {
             driver.findElement(By.xpath(" //td[contains(@class, 'caseStudyName')]/../td[text()='" + caseStudyName + "']"));
@@ -315,9 +313,9 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Verifies, if Case Study by that name was created")
     public CaseStudiesPage verifyCreatedCaseStudy(String caseStudyName){
-        softAssertions.assertThat(checkStudyFromListByName(caseStudyName))
+        softAssertions.assertThat(isCaseStudyCreatedByName(caseStudyName))
                 .as("Case Study wasn't created")
-                .isEqualTo(true);
+                .isTrue();
         return this;
     }
 }

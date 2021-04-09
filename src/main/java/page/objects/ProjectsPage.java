@@ -174,7 +174,7 @@ public class ProjectsPage extends BasePage {
     public void verifyHeadingsClearFilters(){
         assertThat(filterMarkerOfTableHeader.isDisplayed())
                 .as("Marker should disappear after discarding")
-                .isEqualTo(false);
+                .isFalse();
     }
 
     @Step("Clears chosen filter by value in combobox field")
@@ -207,10 +207,10 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Verifies discards of clear operation")
-    public void verifiesDiscardingFields(Comboboxes cmbbx, boolean expectedResult){
+    public void verifiesDiscardingFields(Comboboxes cmbbx){
         assertThat(checksElementInCmbbxFld(cmbbx))
                 .as("Filtered element from list shouldn't be present on page")
-                .isEqualTo(expectedResult);
+                .isFalse();
     }
 
     @Step("Return button to navigate on page by its number")
@@ -237,14 +237,14 @@ public class ProjectsPage extends BasePage {
     public void verifyIfNextPageButtonDisabled(){
         assertThat(paginationNextPage.isEnabled())
                 .as("Button shouldn't be enabled")
-                .isEqualTo(false);
+                .isFalse();
     }
 
     @Step("Verifies if 'First Page' button is disabled")
     public void verifyIfFirstPageButtonSelected(){
         assertThat(paginationNextPage.isEnabled())
                 .as("Button shouldn't be enabled")
-                .isEqualTo(false);
+                .isFalse();
     }
 
     @Step("Moves to first page of projects list")

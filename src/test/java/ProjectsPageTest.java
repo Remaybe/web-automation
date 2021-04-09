@@ -9,6 +9,9 @@ import java.util.List;
 @Feature("Filtering the projects")
 public class ProjectsPageTest extends BaseTest {
 
+    private static final int LAST_PROJECTS_PAGE = 84;
+    private static final int THIRD_PROJECTS_PAGE = 3;
+
     @DataProvider(name = "ProjectFilters")
     public static Object[][] filtersProjectData(){
         return new Object[][] {
@@ -22,7 +25,7 @@ public class ProjectsPageTest extends BaseTest {
     public void discardFiltersInsideCombobox(List<String> value){
         value.stream().forEach(v -> projectsPage.filterByCmbbxValue(Comboboxes.PROJECT, v));
         projectsPage.clearCmbbxValues()
-                .verifiesDiscardingFields(Comboboxes.PROJECT, false);
+                .verifiesDiscardingFields(Comboboxes.PROJECT);
     }
 
     @Test(description = "Search for project using comboboxes")
@@ -70,18 +73,18 @@ public class ProjectsPageTest extends BaseTest {
     public void discardFilterByDeselecting(){
         projectsPage.filterByCmbbxValue(Comboboxes.PROJECT, "Administration")
                 .discardCmbbxValueByXmark("Administration")
-                .verifiesDiscardingFields(Comboboxes.PROJECT, false);
+                .verifiesDiscardingFields(Comboboxes.PROJECT);
     }
 
     @Test(description = "Verifies 'Last Page' button in pagination on the last page")
     public void checkNextPageButtonOnLastPage(){
-        projectsPage.navigateToOrderedPage(84)
+        projectsPage.navigateToOrderedPage(LAST_PROJECTS_PAGE)
                 .verifyIfNextPageButtonDisabled();
     }
 
     @Test(description = "Verifies 'First Page' button in pagination")
     public void paginationButtonsCheck(){
-        projectsPage.navigateToOrderedPage(3)
+        projectsPage.navigateToOrderedPage(THIRD_PROJECTS_PAGE)
                 .clickFirstPage()
                 .verifyIfFirstPageButtonSelected();
     }
