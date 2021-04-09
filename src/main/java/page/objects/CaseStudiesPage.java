@@ -3,6 +3,7 @@ package page.objects;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import other.utils.AllureHelper;
 import other.utils.WaitUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -11,7 +12,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class CaseStudiesPage extends BasePage {
 
     private JavascriptExecutor js;
-    private WaitUtils waitUtils;
 
     public CaseStudiesPage(WebDriver driver) {
         super(driver);
@@ -167,6 +167,7 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Opens 'Case Study' creator")
     public CaseStudiesPage openStudyCreator(){
+        WaitUtils.waitForVisibilityElement(createStudyButton);
         createStudyButton.click();
         return this;
     }
@@ -179,7 +180,7 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Fills 'summary' field")
     public CaseStudiesPage inputSummary(String text){
-        summaryInputFld.sendKeys(text);
+        AllureHelper.addStep("Fill text to summary", ()-> summaryInputFld.sendKeys(text));
         return this;
     }
 
@@ -217,8 +218,7 @@ public class CaseStudiesPage extends BasePage {
     public CaseStudiesPage uploadImg(String file) {
         WaitUtils.waitForVisibilityElement(insImgButton);
         insImgButton.click();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
+        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
                 inputImg,
                 "display",
                 "inline");
@@ -280,19 +280,30 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Saves current case study")
     public CaseStudiesPage saveStudy(){
+        WaitUtils.waitForVisibilityElement(saveStudyButton);
         saveStudyButton.click();
         return this;
     }
 
     @Step("Verify 'save' button status")
     public void verifySaveButtonStatus(boolean expectedStatus){
+        WaitUtils.waitForVisibilityElement(saveStudyButton);
         assertThat(saveStudyButton.isEnabled())
                 .as("'Save' button status is incorrect")
                 .isEqualTo(expectedStatus);
     }
 
+    void ver1(){
+        String beforeOrdering = driver.getPageSource();
+        //todo do smth
+        String afterOrdering = driver.getPageSource();
+
+
+    }
+
     @Step("Verify if case study's creator form opened")
     public void verifyOpenedStudyCreator(boolean expectedStatus){
+        WaitUtils.waitForVisibilityElement(abstractStepLink);
         assertThat(abstractStepLink.isDisplayed())
                 .as("Study's creator form should be opened")
                 .isEqualTo(expectedStatus);

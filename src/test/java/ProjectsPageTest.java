@@ -55,7 +55,6 @@ public class ProjectsPageTest extends BaseTest {
     @Test(description = "Verifies if filters of headers were cleared")
     public void discardFiltersByColumnHeaders(){
         projectsPage.filterByStatusHeader()
-                .filterByAreaHeader()
                 .clearFilters()
                 .verifyHeadingsClearFilters();
     }

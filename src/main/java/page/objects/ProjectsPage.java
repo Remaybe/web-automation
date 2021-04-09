@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+import other.utils.AllureHelper;
 import other.utils.Comboboxes;
 import other.utils.WaitUtils;
 
@@ -15,8 +16,6 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ProjectsPage extends BasePage {
-
-    private WaitUtils waitUtils;
 
     @FindBy(xpath = "//ul[contains(@class, 'Pagination')]/li[1]/button")
     private WebElement paginationFirstPage;
@@ -44,9 +43,6 @@ public class ProjectsPage extends BasePage {
 
     @FindBy(xpath = "//span[text()='Status']")
     private WebElement statusHeaderOfTable;
-
-    @FindBy(xpath = "//span[text()='Area']")
-    private WebElement areaHeaderOfTable;
 
     @FindBy(xpath = "//span[contains(@class, 'sortLabel')]/*")
     private WebElement filterMarkerOfTableHeader;
@@ -86,6 +82,7 @@ public class ProjectsPage extends BasePage {
 
     @Step("Opens list of values in chosen combobox")
     public ProjectsPage clickCmbbxButton(Comboboxes cmbbx){
+        WaitUtils.waitForVisibilityElement(getCmbbxButton(cmbbx));
         getCmbbxButton(cmbbx).click();
         return this;
     }
@@ -173,12 +170,6 @@ public class ProjectsPage extends BasePage {
         return this;
     }
 
-    @Step("Filters column header by its area")
-    public ProjectsPage filterByAreaHeader(){
-        areaHeaderOfTable.click();
-        return this;
-    }
-
     @Step("Verifies clear status after discarding the filters of column headers")
     public void verifyHeadingsClearFilters(){
         assertThat(filterMarkerOfTableHeader.isDisplayed())
@@ -229,7 +220,9 @@ public class ProjectsPage extends BasePage {
 
     @Step("Move to ordered page using pagination element")
     public ProjectsPage navigateToOrderedPage(int numberOfPage){
-        this.getPageByNumber(numberOfPage).click();
+        Runnable action = () -> this.getPageByNumber(numberOfPage).click();
+        AllureHelper.addStep("Move to ordered page using pagination element", action);
+        action.run();
         return this;
     }
 

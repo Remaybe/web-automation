@@ -31,8 +31,6 @@ public class CaseStudiesPageTest extends BaseTest {
                 .verifyKeyFiguresMatchExamplePattern(text)
                 .clickDiscard()
                 .fillAllFldsOnFourthStep("some new text")
-//                .saveStudy()
-//                .verifyCreatedCaseStudy(studyName)
                 .verifyAll();
     }
 

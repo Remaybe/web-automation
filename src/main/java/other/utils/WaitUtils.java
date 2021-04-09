@@ -21,7 +21,7 @@ public class WaitUtils {
                 .ignoring(StaleElementReferenceException.class);
     }
 
-    public void waitForInvisibilityElement(WebElement element) {
+    public static void waitForInvisibilityElement(WebElement element) {
         getWait().until(ExpectedConditions.invisibilityOf(element));
     }
 
