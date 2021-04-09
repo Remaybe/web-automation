@@ -265,7 +265,7 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Fills all fields on first step with some text")
     public CaseStudiesPage fillAllFldsOnSecondStep(String text) {
-        this.inputChallenge(text)
+        inputChallenge(text)
                 .inputSummary(text)
                 .inputKeyChallenges(text);
         return this;
@@ -291,14 +291,6 @@ public class CaseStudiesPage extends BasePage {
         assertThat(saveStudyButton.isEnabled())
                 .as("'Save' button status is incorrect")
                 .isEqualTo(expectedStatus);
-    }
-
-    void ver1(){
-        String beforeOrdering = driver.getPageSource();
-        //todo do smth
-        String afterOrdering = driver.getPageSource();
-
-
     }
 
     @Step("Verify if case study's creator form opened")
