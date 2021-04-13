@@ -28,4 +28,8 @@ public class WaitUtils {
     public static void waitForVisibilityElement(WebElement element) {
         getWait().until(ExpectedConditions.visibilityOf(element));
     }
+
+    public static void waitByExpectedElementText(WebElement element, String text){
+        getWait().until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
 }

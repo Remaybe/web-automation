@@ -1,17 +1,15 @@
 package page.objects;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
 import other.utils.AllureHelper;
 import other.utils.Comboboxes;
 import other.utils.WaitUtils;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -50,14 +48,45 @@ public class ProjectsPage extends BasePage {
     @FindBy(xpath = "//button[@title='Clear']")
     private List<WebElement> cmbbxClearButtons;
 
+    @FindBy(xpath = "//h6[contains(@class, 'colorTextPrimary')]")
+    private List<WebElement> searchableProjectsByName;
+
     public ProjectsPage(WebDriver driver) {
         super(driver);
     }
 
+    @Step("Returns 'false' there are any projects with no 'Case Studies' in it, else returns 'true'")
+    public boolean checksIfEveryProjectHasStudies(){
+        for (WebElement account : searchableProjectsByName) {
+            try {
+                account.findElements(By.xpath("//ancestor::tr//td[contains(@class, 'caseStudiesColumn')]//button"));
+            } catch (NoSuchElementException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Step("Checks is list of projects updated due to 'Case Studies Only' condition")
+    public ProjectsPage verifyIsListContainsProjectsWithCaseStudiesOnly(){
+        softAssertions.assertThat(checksIfEveryProjectHasStudies())
+                .as("All projects in list must contain at least one 'Case Study'")
+                .isTrue();
+        return this;
+    }
+
+    @Step("Adds filters to chosen combobox due to dataprovider")
+    public ProjectsPage addFiltersFromDataprovider(List<String> value, Comboboxes cmbbx){
+        value.forEach(v -> this.filterByCmbbxValue(cmbbx, v));
+        return this;
+    }
+
+    @Step("Gets WebElement of input of chosen combobox")
     public WebElement getCmmbxInput(Comboboxes cmbbx){
         return driver.findElement(By.xpath("//label[text()='" + cmbbx.getString() + "']/following-sibling::div/input"));
     }
 
+    @Step("Gets WebElement of button of chosen combobox")
     public WebElement getCmbbxButton(Comboboxes cmbbx){
         return driver.findElement(By.xpath("//label[text()='" + cmbbx.getString() + "']/following-sibling::div//button[contains(@class, 'popup')]"));
     }
@@ -69,7 +98,7 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Checks 'clear button' status")
-    public void verifyChckButtonStatus(boolean expectedResult){
+    public void verifyClrButtonStatus(boolean expectedResult){
         assertThat(clrButton.isEnabled())
                 .as("'Clear' button should be disabled when there are no filtered values")
                 .isEqualTo(expectedResult);
@@ -95,7 +124,9 @@ public class ProjectsPage extends BasePage {
 
     @Step("Filters projects by using chosen combobox and its value from list")
     public ProjectsPage filterByCmbbxValue(Comboboxes cmbbx, String value) {
-        this.inputCmbbxValue(cmbbx, value).chooseElement(value).clickCmbbxButton(cmbbx);
+        inputCmbbxValue(cmbbx, value)
+                .chooseElement(value)
+                .clickCmbbxButton(cmbbx);
         return this;
     }
 
@@ -126,9 +157,37 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Verify if project has been found")
-    public void verifySrchblProject(String header){
-        WaitUtils.waitForVisibilityElement(projectHeader);
-        Assert.assertEquals(projectHeader.getText(), header);
+    public ProjectsPage verifySrchblProject(String header){
+        WaitUtils.waitByExpectedElementText(projectHeader, header);
+        softAssertions.assertThat(projectHeader.getText())
+                .as("Searchable project by chosen name should exist at the projects list")
+                .isEqualTo(header);
+        return this;
+    }
+
+    @Step("Verifies if list of projects was updated after some action")
+    public ProjectsPage isProjectListUpdated(Supplier<?> action){
+        AtomicReference<String> defaultPageSource = new AtomicReference<>();
+        AtomicReference<Boolean> result = new AtomicReference<>();
+        AllureHelper.addStep("Sets current page source of project's list",
+                () -> defaultPageSource.set(getPageSource()));
+        AllureHelper.addStep("Runs a chosen user's action", action);
+        AllureHelper.addStep("Compares default page source with received after the action, sets 'True' if they are not equal",
+                () -> result.set(!getPageSource().equals(defaultPageSource.get())));
+        softAssertions.assertThat(result.get())
+                .as("List of project's should be updated")
+                .isTrue();
+        return this;
+    }
+
+    @Step("Collects and asserts all soft assertions")
+    public void verifyAll(){
+        softAssertions.assertAll();
+    }
+
+    @Step("Gets current page source")
+    public String getPageSource(){
+        return driver.getPageSource();
     }
 
     @Step("Selects 'With case studies only' checkbox")
@@ -158,10 +217,11 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Verifies, are checkboxes selected or not")
-    public void verifySelectedCheckboxes(boolean expectedResult){
-        assertThat(managedByMeCheckbox.isSelected() && caseStudyCheckbox.isSelected() && activeProjectsCheckbox.isSelected())
+    public ProjectsPage verifySelectedCheckboxes(boolean expectedResult){
+        softAssertions.assertThat(managedByMeCheckbox.isSelected() && caseStudyCheckbox.isSelected() && activeProjectsCheckbox.isSelected())
                 .as("Checkboxes selected incorrectly")
                 .isEqualTo(expectedResult);
+        return this;
     }
 
     @Step("Filters column header by its status")
@@ -171,10 +231,11 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Verifies clear status after discarding the filters of column headers")
-    public void verifyHeadingsClearFilters(){
-        assertThat(filterMarkerOfTableHeader.isDisplayed())
+    public ProjectsPage verifyHeadingsClearFilters(){
+        softAssertions.assertThat(filterMarkerOfTableHeader.isDisplayed())
                 .as("Marker should disappear after discarding")
                 .isFalse();
+        return this;
     }
 
     @Step("Clears chosen filter by value in combobox field")
@@ -185,8 +246,7 @@ public class ProjectsPage extends BasePage {
 
     @Step("Clears existing combobox values from its fields")
     public ProjectsPage clearCmbbxValues(){
-        for (int i = 0; i < cmbbxClearButtons.size(); i++) {
-            WebElement element = cmbbxClearButtons.get(i);
+        for (WebElement element : cmbbxClearButtons) {
             if (element.isDisplayed()) {
                 element.click();
             }
@@ -198,7 +258,7 @@ public class ProjectsPage extends BasePage {
     public boolean checksElementInCmbbxFld(Comboboxes cmbbx){
         boolean actualResult;
         try {
-            driver.findElement(By.xpath("//*[contains(text(), '" + cmbbx.getString() + "')]/..//input/../div[1][@role='button']"));
+            driver.findElement(By.xpath("//label[contains(text(), '" + cmbbx.getString() + "')]/..//input/../div[1][@role='button']"));
             actualResult = true;
         } catch (NoSuchElementException e) {
             actualResult = false;
@@ -207,10 +267,11 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Verifies discards of clear operation")
-    public void verifiesDiscardingFields(Comboboxes cmbbx){
-        assertThat(checksElementInCmbbxFld(cmbbx))
+    public ProjectsPage verifiesDiscardingFields(Comboboxes cmbbx){
+        softAssertions.assertThat(checksElementInCmbbxFld(cmbbx))
                 .as("Filtered element from list shouldn't be present on page")
                 .isFalse();
+        return this;
     }
 
     @Step("Return button to navigate on page by its number")
@@ -234,17 +295,19 @@ public class ProjectsPage extends BasePage {
     }
 
     @Step("Verifies if 'Next Page' button is disabled")
-    public void verifyIfNextPageButtonDisabled(){
-        assertThat(paginationNextPage.isEnabled())
+    public ProjectsPage verifyIfNextPageButtonDisabled(){
+        softAssertions.assertThat(paginationNextPage.isEnabled())
                 .as("Button shouldn't be enabled")
                 .isFalse();
+        return this;
     }
 
     @Step("Verifies if 'First Page' button is disabled")
-    public void verifyIfFirstPageButtonSelected(){
-        assertThat(paginationNextPage.isEnabled())
+    public ProjectsPage verifyIfFirstPageButtonSelected(){
+        softAssertions.assertThat(paginationNextPage.isEnabled())
                 .as("Button shouldn't be enabled")
                 .isFalse();
+        return this;
     }
 
     @Step("Moves to first page of projects list")

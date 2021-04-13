@@ -5,15 +5,19 @@ import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 import static java.lang.String.format;
+import static org.apache.log4j.Logger.getLogger;
 
-@Slf4j
+
 public class AllureHelper {
+
+    private static final Logger log = getLogger(AllureHelper.class);
 
     public static void addStep(String stepName) {
         AllureLifecycle lifecycle = Allure.getLifecycle();
