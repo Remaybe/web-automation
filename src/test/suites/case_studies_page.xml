@@ -4,7 +4,7 @@
 <suite name = "Case Studies Page Testing">
     <test name = "Case Studies Test">
         <classes>
-            <class name = "CaseStudiesPageTest" />
+            <class name = "com.csma.CaseStudiesPageTest" />
         </classes>
     </test>
 </suite>

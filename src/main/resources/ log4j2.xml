@@ -8,7 +8,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.nativeapp_testng" level="debug"/>
+        <Logger name="com.csma" level="debug"/>
 
         <Root level="info">
             <AppenderRef ref="STDOUT"/>

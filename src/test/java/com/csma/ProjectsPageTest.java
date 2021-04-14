@@ -1,3 +1,5 @@
+package com.csma;
+
 import io.qameta.allure.Feature;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

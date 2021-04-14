@@ -4,7 +4,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.model.StepResult;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 
 import java.util.UUID;

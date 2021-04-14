@@ -1,3 +1,5 @@
+package com.csma;
+
 import browser.factory.Browser;
 import browser.factory.BrowserFactory;
 import browser.factory.BrowserType;

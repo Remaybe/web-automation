@@ -4,7 +4,7 @@
 <suite name = "Projects Page Testing Suite">
     <test name = "Projects Page Test">
         <classes>
-            <class name = "ProjectsPageTest" />
+            <class name = "com.csma.ProjectsPageTest" />
         </classes>
     </test>
 </suite>
