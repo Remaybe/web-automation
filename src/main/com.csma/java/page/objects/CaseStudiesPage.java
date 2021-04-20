@@ -1,6 +1,7 @@
 package page.objects;
 
 import io.qameta.allure.Step;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import other.utils.AllureHelper;
@@ -96,7 +97,7 @@ public class CaseStudiesPage extends BasePage {
     private WebElement abstractCmbbxButton;
 
     @Step("Verifies is study's name matches itself on example pattern")
-    public CaseStudiesPage verifyNameMatchExamplePattern(String name){
+    public CaseStudiesPage verifyNameMatchExamplePattern(String name, SoftAssertions softAssertions){
         softAssertions.assertThat(nameExamplePattern.getText())
                 .as("Name value doesn't match on example pattern of 'Case Study'")
                 .isEqualTo(name);
@@ -104,7 +105,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies is 'Summary' matches itself on example pattern")
-    public CaseStudiesPage verifySummaryMatchExamplePattern(String summary){
+    public CaseStudiesPage verifySummaryMatchExamplePattern(String summary, SoftAssertions softAssertions){
         softAssertions.assertThat(summaryExamplePattern.getText())
                 .as("Summary value doesn't match on example pattern of 'Case Study'")
                 .isEqualTo(summary);
@@ -112,7 +113,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies is 'Challenge' matches itself on example pattern")
-    public CaseStudiesPage verifyChallengeMatchExamplePattern(String challenge){
+    public CaseStudiesPage verifyChallengeMatchExamplePattern(String challenge, SoftAssertions softAssertions){
         softAssertions.assertThat(challengeExamplePattern.getText())
                 .as("Challenge value doesn't match on example pattern of 'Case Study'")
                 .isEqualTo(challenge);
@@ -120,7 +121,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies is 'Key Challenge' matches itself on example pattern")
-    public CaseStudiesPage verifyKeyChallengeMatchExamplePattern(String keyChallenge){
+    public CaseStudiesPage verifyKeyChallengeMatchExamplePattern(String keyChallenge, SoftAssertions softAssertions){
         softAssertions.assertThat(keyChallengeExamplePattern.getText())
                 .as("Key Challenge value doesn't match on example pattern of 'Case Study'")
                 .isEqualTo(keyChallenge);
@@ -128,7 +129,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies match of uploaded image on 'Solution' field of 'Case Study'")
-    public CaseStudiesPage verifyUploadedImgOnSolutionFld(){
+    public CaseStudiesPage verifyUploadedImgOnSolutionFld(SoftAssertions softAssertions){
         boolean isUploaded;
         try {
             driver.findElement(By.xpath("//header[contains(@class, 'pageHeader')]/..//div[contains(@class, 'solution__description')]/p/img"));
@@ -143,7 +144,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies is 'Key Figures' matches itself on example pattern")
-    public CaseStudiesPage verifyKeyFiguresMatchExamplePattern(String keyFigure){
+    public CaseStudiesPage verifyKeyFiguresMatchExamplePattern(String keyFigure, SoftAssertions softAssertions){
         softAssertions.assertThat(keyFiguresExamplePattern.getText())
                 .as("Key Figure value doesn't match on example pattern of 'Case Study'")
                 .isEqualTo(keyFigure);
@@ -151,7 +152,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies is 'Achieved Result' matches itself on example pattern")
-    public CaseStudiesPage verifyAchievedResultMatchExamplePattern(String result){
+    public CaseStudiesPage verifyAchievedResultMatchExamplePattern(String result, SoftAssertions softAssertions){
         softAssertions.assertThat(achievedResultExamplePattern.getText())
                 .as("Achieved Result value doesn't match on example pattern of 'Case Study'")
                 .isEqualTo(result);
@@ -159,7 +160,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Collects and asserts all soft assertions")
-    public void verifyAll(){
+    public void verifyAll(SoftAssertions softAssertions){
         softAssertions.assertAll();
     }
 
@@ -215,12 +216,15 @@ public class CaseStudiesPage extends BasePage {
     @Step("Uploads an image into the field")
     public CaseStudiesPage uploadImg(String file) {
         WaitUtils.waitForVisibilityElement(insImgButton);
-        insImgButton.click();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
+        AllureHelper.addStep("Clicks on button to upload an image",
+                () -> insImgButton.click());
+        AllureHelper.addStep("Execute script, which makes web element of uploading the file - visible",
+                () -> ((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);",
                 inputImg,
                 "display",
-                "inline");
-        inputImg.sendKeys(file);
+                "inline"));
+        AllureHelper.addStep("Upload file by it's path to current input field on page",
+                () -> inputImg.sendKeys(file));
         returnFocusOnWindow();
         return this;
     }
@@ -263,23 +267,24 @@ public class CaseStudiesPage extends BasePage {
 
     @Step("Fills all fields on first step with some text")
     public CaseStudiesPage fillAllFldsOnSecondStep(String text) {
-        inputChallenge(text)
-                .inputSummary(text)
-                .inputKeyChallenges(text);
+        inputChallenge(text);
+        inputSummary(text);
+        inputKeyChallenges(text);
         return this;
     }
 
     @Step("Fills all fields on third step with some text")
     public CaseStudiesPage fillAllFldsOnFourthStep(String text){
-        this.inputAchievedRslt(text)
-                .inputKeyFigures(text);
+        inputAchievedRslt(text);
+        inputKeyFigures(text);
         return this;
     }
 
     @Step("Saves current case study")
     public CaseStudiesPage saveStudy(){
         WaitUtils.waitForVisibilityElement(saveStudyButton);
-        saveStudyButton.click();
+        AllureHelper.addStep("Clicks on save button to save Case Study",
+                () -> saveStudyButton.click());
         return this;
     }
 
@@ -312,7 +317,7 @@ public class CaseStudiesPage extends BasePage {
     }
 
     @Step("Verifies, if Case Study by that name was created")
-    public CaseStudiesPage verifyCreatedCaseStudy(String caseStudyName){
+    public CaseStudiesPage verifyCreatedCaseStudy(String caseStudyName, SoftAssertions softAssertions){
         softAssertions.assertThat(isCaseStudyCreatedByName(caseStudyName))
                 .as("Case Study wasn't created")
                 .isTrue();
