@@ -1,4 +1,4 @@
-package graphql.api;
+package com.csma.api;
 
 import java.io.*;
 import com.squareup.okhttp.*;

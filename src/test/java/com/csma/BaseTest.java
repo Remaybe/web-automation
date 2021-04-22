@@ -1,8 +1,8 @@
 package com.csma;
 
-import browser.factory.Browser;
-import browser.factory.BrowserFactory;
-import browser.factory.BrowserType;
+import com.csma.browser_factory.Browser;
+import com.csma.browser_factory.BrowserFactory;
+import com.csma.browser_factory.BrowserType;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +14,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
-import other.utils.SessionListener;
-import page.objects.CaseStudiesPage;
-import page.objects.ProjectsPage;
+import com.csma.utils.SessionListener;
+import com.csma.page_objects.ProjectsPage;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,7 @@
-package browser.factory;
+package com.csma.browser_factory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;

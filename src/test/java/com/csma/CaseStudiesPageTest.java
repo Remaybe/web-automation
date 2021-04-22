@@ -1,18 +1,9 @@
 package com.csma;
 
 import io.qameta.allure.Feature;
-import org.checkerframework.checker.units.qual.A;
 import org.testng.annotations.Test;
-import other.utils.ProjectType;
-import page.objects.CaseStudiesPage;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Stream;
+import com.csma.utils.ProjectType;
+import com.csma.page_objects.CaseStudiesPage;
 
 @Feature("Creating of case study")
 public class CaseStudiesPageTest extends BaseTest {

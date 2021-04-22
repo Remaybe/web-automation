@@ -1,8 +1,7 @@
-package page.objects;
+package com.csma.page_objects;
 
 import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import java.awt.*;

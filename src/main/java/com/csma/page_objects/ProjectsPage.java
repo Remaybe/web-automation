@@ -1,15 +1,13 @@
-package page.objects;
+package com.csma.page_objects;
 
-import browser.factory.Browser;
+import com.csma.browser_factory.Browser;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringDecorator;
-import other.utils.AllureHelper;
-import other.utils.Comboboxes;
-import other.utils.SessionListener;
-import other.utils.WaitUtils;
+import com.csma.utils.AllureHelper;
+import com.csma.utils.Comboboxes;
+import com.csma.utils.WaitUtils;
 
 import java.util.ArrayList;
 import java.util.List;

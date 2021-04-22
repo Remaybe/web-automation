@@ -1,11 +1,11 @@
-package page.objects;
+package com.csma.page_objects;
 
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import other.utils.AllureHelper;
-import other.utils.WaitUtils;
+import com.csma.utils.AllureHelper;
+import com.csma.utils.WaitUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

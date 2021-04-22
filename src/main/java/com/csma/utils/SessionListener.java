@@ -1,9 +1,9 @@
-package other.utils;
+package com.csma.utils;
 
-import browser.factory.Browser;
+import com.csma.browser_factory.Browser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.WebDriverListener;
-import page.objects.AuthPage;
+import com.csma.page_objects.AuthPage;
 
 import java.lang.reflect.Method;
 

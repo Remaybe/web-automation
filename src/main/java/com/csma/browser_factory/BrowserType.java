@@ -1,4 +1,4 @@
-package browser.factory;
+package com.csma.browser_factory;
 
 public enum BrowserType {
     CHROME,
