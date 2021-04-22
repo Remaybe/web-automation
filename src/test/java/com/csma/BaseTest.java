@@ -3,9 +3,9 @@ package com.csma;
 import com.csma.browser_factory.Browser;
 import com.csma.browser_factory.BrowserFactory;
 import com.csma.browser_factory.BrowserType;
+import com.csma.utils.AllureHelper;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Feature("Authorization on site")
-@Slf4j
 public class BaseTest {
 
     protected WebDriver driver;
@@ -37,7 +36,7 @@ public class BaseTest {
         driver = browser.getDriver();
         EventFiringDecorator handler = new EventFiringDecorator(new SessionListener());
         projectsPage = new ProjectsPage(handler.decorate(driver));
-        log.info("Sets up chosen browser from factory, opens the site and input value for logging in");
+        AllureHelper.addStep("Sets up chosen browser from factory, opens the site and input value for logging in");
     }
 
     @BeforeMethod
@@ -45,6 +44,7 @@ public class BaseTest {
         driver.get("https://csma-staging.griddynamics.net/projects");
         softAssertions = new SoftAssertions();
         if (!driver.getCurrentUrl().contains("sso.griddynamics.net")) projectsPage.waitTillLoad();
+        AllureHelper.addStep("Updates current web page on starting page");
     }
 
     @AfterMethod
@@ -55,12 +55,13 @@ public class BaseTest {
         driver.switchTo().window(tabs.get(PREVIOUS_TAB));
         driver.close();
         driver.switchTo().window(tabs.get(NEW_TAB));
+        AllureHelper.addStep("Opens new tab, where will site open");
     }
 
     @AfterTest
     @Story("Closes the browser")
     public void tearDown(){
         driver.quit();
-        log.info("Closes the browser after test method");
+        AllureHelper.addStep("Closes the browser after test method");
     }
 }

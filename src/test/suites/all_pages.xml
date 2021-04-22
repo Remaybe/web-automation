@@ -1,0 +1,10 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "All Pages Testing Suite" parallel="methods">
+    <test name = "All Pages Test">
+        <packages>
+            <package name="com.csma.*"/>
+        </packages>
+    </test>
+</suite>

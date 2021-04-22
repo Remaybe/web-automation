@@ -1,14 +1,13 @@
 package com.csma.page_objects;
 
+import com.csma.utils.AllureHelper;
 import io.qameta.allure.Story;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-@Slf4j
 public class BasePage {
     WebDriver driver;
 
@@ -30,7 +29,7 @@ public class BasePage {
         } catch (AWTException | InterruptedException e) {
             e.printStackTrace();
         }
-        log.info("Creates bot, which will return focus on window in browser by closing excess pop-up window");
+        AllureHelper.addStep("Creates bot, which will return focus on window in browser by closing excess pop-up window");
         return this;
     }
 }
