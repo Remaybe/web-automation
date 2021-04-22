@@ -1,6 +1,6 @@
-package other.utils;
+package com.csma.utils;
 
-import browser.factory.Browser;
+import com.csma.browser_factory.Browser;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -27,5 +27,9 @@ public class WaitUtils {
 
     public static void waitForVisibilityElement(WebElement element) {
         getWait().until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static void waitByExpectedElementText(WebElement element, String text){
+        getWait().until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 }

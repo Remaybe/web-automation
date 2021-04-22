@@ -1,7 +1,9 @@
+package com.csma;
+
 import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
-import other.utils.ProjectType;
-import page.objects.CaseStudiesPage;
+import com.csma.utils.ProjectType;
+import com.csma.page_objects.CaseStudiesPage;
 
 @Feature("Creating of case study")
 public class CaseStudiesPageTest extends BaseTest {
@@ -13,40 +15,37 @@ public class CaseStudiesPageTest extends BaseTest {
         String text = "Some text";
         String studyName = "remaybestudy";
         caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
-        caseStudies
-                .openStudyCreator()
+        caseStudies.openStudyCreator()
                 .setStudiesName(studyName)
-                .verifyNameMatchExamplePattern(studyName)
+                .verifyNameMatchExamplePattern(studyName, softAssertions)
                 .moveToSecondStep()
                 .fillAllFldsOnSecondStep(text)
-                .verifySummaryMatchExamplePattern(text)
-                .verifyChallengeMatchExamplePattern(text)
-                .verifyKeyChallengeMatchExamplePattern(text)
+                .verifySummaryMatchExamplePattern(text, softAssertions)
+                .verifyChallengeMatchExamplePattern(text, softAssertions)
+                .verifyKeyChallengeMatchExamplePattern(text, softAssertions)
                 .clickContinue()
                 .uploadImg(img)
-                .verifyUploadedImgOnSolutionFld()
+                .verifyUploadedImgOnSolutionFld(softAssertions)
                 .clickContinue()
                 .fillAllFldsOnFourthStep(text)
-                .verifyAchievedResultMatchExamplePattern(text)
-                .verifyKeyFiguresMatchExamplePattern(text)
+                .verifyAchievedResultMatchExamplePattern(text, softAssertions)
+                .verifyKeyFiguresMatchExamplePattern(text, softAssertions)
                 .clickDiscard()
                 .fillAllFldsOnFourthStep("some new text")
-                .verifyAll();
+                .verifyAll(softAssertions);
     }
 
     @Test(description = "Creates case study with no input values")
     public void createStudyWithoutInput(){
         caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
-        caseStudies
-                .openStudyCreator()
+        caseStudies.openStudyCreator()
                 .verifySaveButtonStatus(false);
     }
 
     @Test(description = "Creates case study only by filling 'name' field")
     public void createStudyOnlyWithName(){
         caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
-        caseStudies
-                .openStudyCreator()
+        caseStudies.openStudyCreator()
                 .setStudiesName("Some name")
                 .verifySaveButtonStatus(true);
     }
@@ -54,12 +53,10 @@ public class CaseStudiesPageTest extends BaseTest {
     @Test(description = "Opens creator of case study form immediately after saving the previous one")
     public void createStudyImmediatelyAfterPrevious(){
         caseStudies = ProjectType.AEO.getStudiesPage(projectsPage);
-        caseStudies
-                .openStudyCreator()
+        caseStudies.openStudyCreator()
                 .setStudiesName("Some name1")
                 .saveStudy()
                 .openStudyCreator()
                 .verifyOpenedStudyCreator(true);
     }
-
 }
