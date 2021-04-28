@@ -1,8 +1,4 @@
 package com.csma.api;
-
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.specification.RequestSpecification;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.github.jsonSnapshot.SnapshotMatcher.*;
+import static io.restassured.RestAssured.given;
 
 public class GraphQLTest {
     @BeforeClass
@@ -28,17 +25,15 @@ public class GraphQLTest {
 
         String body = "{\"query\":\"{\\n  caseStudies {\\n    id\\n    name\\n  }\\n}\",\"variables\":{}}";
 
-        RestAssured.baseURI = "https://csma-staging.griddynamics.net/api/graphql";
-        RequestSpecBuilder reqSpecBuilder = new RequestSpecBuilder();
-        reqSpecBuilder.setContentType("application/json; charset=UTF-8");
-        reqSpecBuilder.addHeaders(headers).setBody(body);
+        GraphQLGetResponse graphResponse = given()
+                .baseUri("https://csma-staging.griddynamics.net/api/graphql")
+                .contentType("application/json; charset=UTF-8")
+                .headers(headers)
+                .body(body)
+                .expect()
+                .when().get()
+                .as(GraphQLGetResponse.class);
 
-        RequestSpecification requestSpecification = RestAssured.given(reqSpecBuilder.build());
-        GraphQLGetResponse graphResponse =
-                requestSpecification.expect()
-                        .when()
-                        .post()
-                        .as(GraphQLGetResponse.class);
         expect(graphResponse).toMatchSnapshot();
     }
 
