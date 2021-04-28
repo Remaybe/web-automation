@@ -27,9 +27,34 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <allure-maven-plugin-report.version>2.13.6</allure-maven-plugin-report.version>
         <qameta.allure.plugin.version>2.10.0</qameta.allure.plugin.version>
+        <rest-assured.version>4.1.1</rest-assured.version>
+        <json-snapshot.version>1.0.17</json-snapshot.version>
+        <jackson-core.version>2.9.6</jackson-core.version>
+        <log4j.version>2.5</log4j.version>
+        <allure.version>2.13.9</allure.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.json-snapshot</groupId>
+            <artifactId>json-snapshot</artifactId>
+            <version>${json-snapshot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
@@ -48,17 +73,17 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.5</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.5</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.13.9</version>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -68,19 +93,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.vimalselvam</groupId>
-            <artifactId>test-graphql-java</artifactId>
-            <version>${test.graphql.verion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>${okhttp.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
-            <version>2.13.9</version>
+            <version>${allure.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -92,7 +107,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <!-- IMPORTANT -->
                     <useIncrementalCompilation>false</useIncrementalCompilation>
                     <compilerVersion>${java.version}</compilerVersion>
                     <source>${java.version}</source>

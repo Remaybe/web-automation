@@ -1,4 +1,4 @@
-package com.csma;
+package com.csma.web;
 
 import com.csma.browser_factory.Browser;
 import com.csma.browser_factory.BrowserFactory;
