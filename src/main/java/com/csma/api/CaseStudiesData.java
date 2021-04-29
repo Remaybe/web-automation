@@ -4,6 +4,24 @@ public class CaseStudiesData {
 
     private String name;
     private int id;
+    private int progress;
+    private String status;
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;
