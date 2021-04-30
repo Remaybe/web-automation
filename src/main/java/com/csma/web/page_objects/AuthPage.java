@@ -1,11 +1,15 @@
 package com.csma.web.page_objects;
 
+import com.csma.web.utils.WaitUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AuthPage extends BasePage {
+
+    public static final String LOGIN = "emaznev";
+    public static final String PASSWORD = "@85411321eGo885441113221";
 
     @FindBy(xpath = "//div[contains(@class, 'auth-toggle')]")
     private WebElement signInLink;
@@ -49,9 +53,10 @@ public class AuthPage extends BasePage {
 
     @Step("Signs in site by valid login and password")
     public void auth(String login, String pass){
-        this.clickSignIn()
-                .inputLogin(login)
-                .inputPass(pass)
-                .clickSignNowButton();
+        WaitUtils.waitForVisibilityElement(signInLink);
+        clickSignIn();
+        inputLogin(login);
+        inputPass(pass);
+        clickSignNowButton();
     }
 }

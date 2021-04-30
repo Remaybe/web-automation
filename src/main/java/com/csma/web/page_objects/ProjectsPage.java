@@ -2,6 +2,7 @@ package com.csma.web.page_objects;
 
 import com.csma.web.browser_factory.Browser;
 import io.qameta.allure.Step;
+import lombok.SneakyThrows;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -394,7 +395,7 @@ public class ProjectsPage extends BasePage {
     @Step("Authenticates and returns current cookie")
     public static String getCookies(WebDriver driver){
         AuthPage authPage = new AuthPage(driver);
-        authPage.auth("emaznev", "@85411321eGo885441113221");
+        authPage.auth(AuthPage.LOGIN, AuthPage.PASSWORD);
         ProjectsPage projectsPage = new ProjectsPage(driver);
         projectsPage.waitTillLoad();
         Set<Cookie> cookies = Browser.getCurrentDriver().manage().getCookies();

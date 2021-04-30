@@ -1,4 +1,5 @@
 package com.csma.api;
+import com.csma.api.steps.StudiesSteps;
 import com.csma.web.browser_factory.BrowserFactory;
 import com.csma.web.browser_factory.BrowserType;
 import com.csma.web.page_objects.ProjectsPage;
@@ -7,13 +8,13 @@ import org.testng.annotations.BeforeClass;
 
 public class BaseTestAPI {
 
-    protected static String currentCookie;
+    private static final WebDriver DRIVER = new BrowserFactory().createBrowser(BrowserType.CHROME).getDriver();
+    private static StudiesSteps studiesSteps;
 
     @BeforeClass
     public void beforeAll() {
-        WebDriver driver = new BrowserFactory().createBrowser(BrowserType.CHROME).getDriver();
-        driver.get("https://csma-staging.griddynamics.net/projects");
-        currentCookie = ProjectsPage.getCookies(driver);
-        driver.quit();
+        DRIVER.get("https://csma-staging.griddynamics.net/projects");
+        studiesSteps = new StudiesSteps(ProjectsPage.getCookies(DRIVER));
+        DRIVER.quit();
     }
 }

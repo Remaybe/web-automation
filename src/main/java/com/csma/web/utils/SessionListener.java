@@ -28,7 +28,7 @@ public class SessionListener implements WebDriverListener {
     private void conditionSolutionWrapper(){
         if (driver.getCurrentUrl().contains("sso.griddynamics.net")) {
             AuthPage authPage = new AuthPage(driver);
-            authPage.auth("emaznev", "@85411321eGo885441113221");
+            authPage.auth(AuthPage.LOGIN, AuthPage.PASSWORD);
         }
     }
 }
