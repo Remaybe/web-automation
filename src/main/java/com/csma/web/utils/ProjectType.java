@@ -1,8 +1,8 @@
-package com.csma.utils;
+package com.csma.web.utils;
 
 import io.qameta.allure.Step;
-import com.csma.page_objects.CaseStudiesPage;
-import com.csma.page_objects.ProjectsPage;
+import com.csma.web.page_objects.CaseStudiesPage;
+import com.csma.web.page_objects.ProjectsPage;
 
 public enum ProjectType {
     AEO {

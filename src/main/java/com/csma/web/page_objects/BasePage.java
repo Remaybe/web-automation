@@ -1,6 +1,6 @@
-package com.csma.page_objects;
+package com.csma.web.page_objects;
 
-import com.csma.utils.AllureHelper;
+import com.csma.web.utils.AllureHelper;
 import io.qameta.allure.Story;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

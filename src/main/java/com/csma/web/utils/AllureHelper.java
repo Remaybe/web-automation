@@ -1,4 +1,4 @@
-package com.csma.utils;
+package com.csma.web.utils;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureLifecycle;

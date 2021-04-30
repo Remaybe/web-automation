@@ -1,4 +1,4 @@
-package com.csma.page_objects;
+package com.csma.web.page_objects;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;

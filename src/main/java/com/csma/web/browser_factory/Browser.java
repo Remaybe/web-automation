@@ -1,4 +1,4 @@
-package com.csma.browser_factory;
+package com.csma.web.browser_factory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

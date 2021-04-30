@@ -1,16 +1,17 @@
-package com.csma.page_objects;
+package com.csma.web.page_objects;
 
-import com.csma.browser_factory.Browser;
+import com.csma.web.browser_factory.Browser;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import com.csma.utils.AllureHelper;
-import com.csma.utils.Comboboxes;
-import com.csma.utils.WaitUtils;
+import com.csma.web.utils.AllureHelper;
+import com.csma.web.utils.Comboboxes;
+import com.csma.web.utils.WaitUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
@@ -388,5 +389,15 @@ public class ProjectsPage extends BasePage {
     public ProjectsPage clickFirstPage(){
         paginationFirstPage.click();
         return this;
+    }
+
+    @Step("Authenticates and returns current cookie")
+    public static String getCookies(WebDriver driver){
+        AuthPage authPage = new AuthPage(driver);
+        authPage.auth("emaznev", "@85411321eGo885441113221");
+        ProjectsPage projectsPage = new ProjectsPage(driver);
+        projectsPage.waitTillLoad();
+        Set<Cookie> cookies = Browser.getCurrentDriver().manage().getCookies();
+        return cookies.iterator().next().toString();
     }
 }

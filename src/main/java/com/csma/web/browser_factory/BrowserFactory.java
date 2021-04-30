@@ -1,4 +1,4 @@
-package com.csma.browser_factory;
+package com.csma.web.browser_factory;
 
 public class BrowserFactory {
     public Browser createBrowser(BrowserType type) {
