@@ -6,10 +6,11 @@ import com.csma.web.page_objects.ProjectsPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 
+
 public class BaseTestAPI {
 
     private static final WebDriver DRIVER = new BrowserFactory().createBrowser(BrowserType.CHROME).getDriver();
-    private static StudiesSteps studiesSteps;
+    protected static StudiesSteps studiesSteps;
 
     @BeforeClass
     public void beforeAll() {

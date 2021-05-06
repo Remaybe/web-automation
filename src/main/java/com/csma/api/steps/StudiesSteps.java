@@ -9,12 +9,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 
 public class StudiesSteps {
 
-    private static final String CASE_STUDIES_QUERY = "{\"query\":\"{\\n  caseStudies {\\n    progress\\n    status\\n    id\\n    name\\n  }\\n}\",\"variables\":{}}";
+//    private static final String CASE_STUDIES_QUERY = "{\"query\":\"{\\n  caseStudies {\\n    progress\\n    createdAt\\n    updatedAt\\n    status\\n    id\\n    name\\n  }\\n}\",\"variables\":{}}";
+    private static final String CASE_STUDIES_QUERY = "{\"query\":\"{\\n  caseStudies {\\n    progress\\n    createdAt\\n  project {\\n  id\\n  }\\n    updatedAt\\n    status\\n    id\\n    name\\n  }\\n}\",\"variables\":{}}";
     private static final int SUCCESS_STATUS = 200;
     private static final long NO_VALUES_IN_LIST = 0L;
     private static final int MIN_PROGRESS_VALUE = 0;
@@ -53,7 +55,7 @@ public class StudiesSteps {
 
     @Step("Verifies if 'ID' fields have unique values")
     public static void verifyUniqueIdentifiers(List<CaseStudiesData> studies){
-        assertThat(studies.stream().filter(value -> Collections.frequency(studies, value) > 1).count())
+        assertThat(studies.stream().filter(value -> Collections.frequency(studies, value.getId()) > 1).count())
                 .as("Identifiers should be unique")
                 .isEqualTo(NO_VALUES_IN_LIST);
     }
@@ -71,6 +73,24 @@ public class StudiesSteps {
         assertThat(studies.stream()
                 .filter(value -> value.getProgress() == 0).filter(value -> !value.getStatus().equals("DRAFT")).count())
                 .as("Projects with no progress should contain 'DRAFT' status")
+                .isEqualTo(NO_VALUES_IN_LIST);
+    }
+
+    @Step("Verifies if 'Case Study' parameter 'CreatedAt' is earlier than 'UpdatedAd'")
+    public static void verifyValidDates(List<CaseStudiesData> studies){
+        assertThat(studies.stream()
+                .filter(value -> value.getCreatedAt().compareTo(value.getUpdatedAt()) == 1).count())
+                .as("'CreatedAt' date should be earlier than 'UpdatedAd'")
+                .isEqualTo(NO_VALUES_IN_LIST);
+    }
+
+    @Step("Verifies if 'Case Study' have unique name in each project type")
+    public static void verifyUniqueStudiesNamesByProject(List<CaseStudiesData> studies){
+        assertThat(studies.stream()
+                .filter(value -> Collections.frequency(studies.stream()
+                        .filter(val -> Collections.frequency(studies, val.getName()) > 1)
+                        .collect(Collectors.toList()), value.getProject().getId()) > 1).count())
+                .as("There are shouldn't be project with same name in exact projects")
                 .isEqualTo(NO_VALUES_IN_LIST);
     }
 }

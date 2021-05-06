@@ -30,4 +30,16 @@ public class GraphQLTest extends BaseTestAPI {
         List<CaseStudiesData> studies = StudiesSteps.getCaseStudies();
         StudiesSteps.verifyValidProgressValues(studies);
     }
+
+    @Test(description = "Checks is date gets correctly")
+    public void checksAreDatesValid(){
+        List<CaseStudiesData> studies = StudiesSteps.getCaseStudies();
+        StudiesSteps.verifyValidDates(studies);
+    }
+
+    @Test(description = "Checks are names unique in each projects directory")
+    public void checksUniqueNameDueProject(){
+        List<CaseStudiesData> studies = StudiesSteps.getCaseStudies();
+        StudiesSteps.verifyUniqueStudiesNamesByProject(studies);
+    }
 }
