@@ -1,9 +1,9 @@
-package com.csma;
+package com.csma.web;
 
 import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
-import com.csma.utils.ProjectType;
-import com.csma.page_objects.CaseStudiesPage;
+import com.csma.web.utils.ProjectType;
+import com.csma.web.page_objects.CaseStudiesPage;
 
 @Feature("Creating of case study")
 public class CaseStudiesPageTest extends BaseTest {

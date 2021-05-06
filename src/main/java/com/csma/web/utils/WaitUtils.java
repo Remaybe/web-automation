@@ -1,6 +1,6 @@
-package com.csma.utils;
+package com.csma.web.utils;
 
-import com.csma.browser_factory.Browser;
+import com.csma.web.browser_factory.Browser;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;

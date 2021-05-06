@@ -1,4 +1,4 @@
-package com.csma.utils;
+package com.csma.web.utils;
 
 public enum Comboboxes {
     ACCOUNT {

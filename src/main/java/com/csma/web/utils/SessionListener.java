@@ -1,9 +1,9 @@
-package com.csma.utils;
+package com.csma.web.utils;
 
-import com.csma.browser_factory.Browser;
+import com.csma.web.browser_factory.Browser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.WebDriverListener;
-import com.csma.page_objects.AuthPage;
+import com.csma.web.page_objects.AuthPage;
 
 import java.lang.reflect.Method;
 
@@ -28,7 +28,7 @@ public class SessionListener implements WebDriverListener {
     private void conditionSolutionWrapper(){
         if (driver.getCurrentUrl().contains("sso.griddynamics.net")) {
             AuthPage authPage = new AuthPage(driver);
-            authPage.auth("emaznev", "@85411321eGo885441113221");
+            authPage.auth(AuthPage.LOGIN, AuthPage.PASSWORD);
         }
     }
 }

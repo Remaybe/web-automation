@@ -1,9 +1,9 @@
-package com.csma;
+package com.csma.web;
 
 import io.qameta.allure.Feature;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import com.csma.utils.Comboboxes;
+import com.csma.web.utils.Comboboxes;
 
 import java.util.Arrays;
 import java.util.List;
